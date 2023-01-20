@@ -20,7 +20,7 @@ namespace Dispatch.Scripts
 
         public DateTimeOffset? DeliveryFromTime { get; set; }
 
-        public DateTimeOffset? DeliveryToTime { get; set; }       
+        public DateTimeOffset? DeliveryToTime { get; set; }
 
         public string? ServiceLevelTypeId { get; set; }
 
