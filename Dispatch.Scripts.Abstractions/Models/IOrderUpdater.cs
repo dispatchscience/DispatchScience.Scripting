@@ -105,6 +105,11 @@ namespace Dispatch.Scripts
         /// </summary>
         Task UpdateProofOfPickupReceivedFrom(string receivedFrom);
 
+        /// <summary>
+        /// Update one of the reference number value.
+        /// </summary>
+        Task UpdateReferenceNumber(string referenceNumberValue, ReferenceNumberIndex referenceNumberIndex);
+
         // Properties
         string OrderId { get; }
         string AccountId { get; }
