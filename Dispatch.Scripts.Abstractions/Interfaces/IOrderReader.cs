@@ -20,6 +20,11 @@ namespace Dispatch.Scripts
         bool? GenerateProofOfDeliveryOnDelivery { get; }
         Length Distance { get; }
 
+        string PickupNotes { get; }
+        string DeliveryNotes { get; }
+        string Notes { get; }
+        string InternalNotes { get; }
+
         Driver? AssignedDriver { get; }
 
         TimeWindow PickupWindow { get; }

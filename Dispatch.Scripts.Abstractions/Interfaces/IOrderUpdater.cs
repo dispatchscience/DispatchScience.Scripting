@@ -108,6 +108,30 @@ namespace Dispatch.Scripts
         /// </summary>
         Task UpdateReferenceNumber(string referenceNumberValue, ReferenceNumberIndex referenceNumberIndex);
 
+        /// <summary>
+        /// Update the notes associated with the pickup information
+        /// </summary>
+        /// <param name="pickupNotes">The new notes information</param>
+        Task UpdatePickupNotes(string pickupNotes);
+
+        /// <summary>
+        /// Update the notes associated with the delivery information
+        /// </summary>
+        /// <param name="deliveryNotes">The new notes information</param>
+        Task UpdateDeliveryNotes(string deliveryNotes);
+
+        /// <summary>
+        /// Update the internal notes of the order
+        /// </summary>
+        /// <param name="internalNotes">The new notes information</param>
+        Task UpdateInternalNotes(string internalNotes);
+
+        /// <summary>
+        /// Update the notes of the order
+        /// </summary>
+        /// <param name="notes">The new notes information</param>
+        Task UpdateNotes(string notes);
+
         // Everything related to driver payout. Will throw an exception if called on a multisegment order. 
         new IPayoutUpdater Payout { get; }
 
