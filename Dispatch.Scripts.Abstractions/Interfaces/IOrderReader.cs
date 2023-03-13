@@ -67,6 +67,8 @@ namespace Dispatch.Scripts
 
         OrderFulfillmentType FulfillmentType { get; }
 
+        OrderType Type { get; }
+
         // Everything related to driver payout. Will throw an exception if called on a multisegment order. 
         IPayoutReader Payout { get; }
 
