@@ -145,5 +145,23 @@ namespace Dispatch.Scripts
         /// Note: Segment orders might not exist yet, you can check the HasSegmentsPendingCreation property to know if all segments are created/existing.
         /// </summary>
         new Task<IOrderUpdater[]> GetSegmentOrders();
+
+        /// <summary>
+        /// Update the pickup window of the order
+        /// </summary>
+        /// <param name="newPickupWindow">The new pickup window</param>
+        /// <remarks>
+        /// This method will throw if the changes result in the order having invalid time windows.
+        /// </remarks>
+        Task UpdatePickupWindow(TimeWindow newPickupWindow);
+
+        /// <summary>
+        /// Update the delivery window of the order
+        /// </summary>
+        /// <param name="newDeliveryWindow">The new delivery window</param>
+        /// <remarks>
+        /// This method will throw if the changes result in the order having invalid time windows.
+        /// </remarks>
+        Task UpdateDeliveryWindow(TimeWindow newDeliveryWindow);
     }
 }

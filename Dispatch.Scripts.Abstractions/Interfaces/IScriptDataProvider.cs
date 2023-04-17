@@ -7,6 +7,7 @@ namespace Dispatch.Scripts
     public interface IScriptDataProvider
     {
         Task<IDictionary<string, string>> GetScriptData();
+        Task<IList<string>> GetEventNames();
 
         Task<IDictionary<string, string>> GetAccountFields();
         Task<AccountScriptInfo?> GetAccountInfo();
