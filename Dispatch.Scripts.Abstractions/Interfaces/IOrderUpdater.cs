@@ -17,6 +17,21 @@ namespace Dispatch.Scripts
         Task RemoveAttribute(string attributeId);
 
         /// <summary>
+        /// Put the order on hold.
+        /// </summary>
+        /// <param name="exceptionCodeId">The exception code Id to add.</param>
+        /// <param name="notes">A note explaining why the order was put on hold (optional).</param>
+        /// <remarks>
+        /// This method will throw if no exception code matches the provided <paramref name="exceptionCodeId"/> or if the order is delivered or cancelled.
+        /// </remarks>
+        Task PutOnHold(string exceptionCodeId, string? notes = null);
+
+        /// <summary>
+        /// Release the order from hold.
+        /// </summary>
+        Task Release();
+
+        /// <summary>
         /// Marks the order as "Ready for invoicing".
         /// </summary>
         Task MarkAsReadyForInvoicing();
