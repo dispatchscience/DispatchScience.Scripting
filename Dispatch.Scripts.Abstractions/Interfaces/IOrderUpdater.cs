@@ -37,6 +37,15 @@ namespace Dispatch.Scripts
         Task MarkAsVerifyBeforeSettlement();
 
         /// <summary>
+        /// Override the delivery charge.
+        /// </summary>
+        /// <remarks>
+        /// If the order doesn't have a delivery charge, one will be automatically added.
+        /// </remarks>
+        /// <param name="basePrice">The new delivery charge amount, excluding fuel surcharges.</param>
+        Task OverrideDeliveryCharge(decimal basePrice);
+
+        /// <summary>
         /// Add an extra fee charge.
         /// </summary>
         /// <param name="extraFeeTypeId">The ExtraFeeType id to add.</param>
