@@ -4,6 +4,8 @@ namespace Dispatch.Scripts
 {
     public class HubInfo
     {
+        public string? HubId { get; set; }
+
         public Address Address { get; set; } = default!;
 
         public ContactInfo Contact { get; set; } = default!;

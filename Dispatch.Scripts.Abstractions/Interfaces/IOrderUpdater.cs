@@ -111,6 +111,14 @@ namespace Dispatch.Scripts
         Task SetGenerateProofOfDeliveryOnDelivery(bool isEnabled);
 
         /// <summary>
+        /// Add one or more hubs to a Standard order by using hub ids. This method cannot be called more than once, because once a hub is added,
+        /// it's FulfillmentType will be MultiSegment and attempting to call it will throw an exception.
+        /// </summary>
+        /// <param name="hubIds">The ids of the hub to add.</param>
+        /// <returns></returns>
+        Task AddHubs(params string[] hubIds);
+
+        /// <summary>
         /// Add one or more hubs to a Standard order. This method cannot be called more than once, because once a hub is added, 
         /// it's FulfillmentType will be MultiSegment and attempting to call it will throw an exception.
         /// </summary>
