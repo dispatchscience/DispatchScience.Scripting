@@ -17,5 +17,7 @@ namespace Dispatch.Scripts
         Task<IList<ParcelTypeInfo>> GetAvailableParcelTypes();
         Task<HolidayInfo> GetHoliday(DateTimeOffset date);
         Task<IList<HubInfo>> FindHubs(string hubName);
+
+        Task<ScriptCell[]> GetSheet(string? sheetName = null);
     }
 }
