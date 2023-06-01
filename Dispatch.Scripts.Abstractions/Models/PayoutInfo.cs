@@ -4,11 +4,28 @@ namespace Dispatch.Scripts
 {
     public class PayoutInfo
     {
-        public decimal? PredefinedPayoutValue { get; set; }
-        public DriverCommissionCalculationType DriverCommissionCalculationType { get; set; }
+        [Obsolete("Will be removed eventually, use the new properties instead.")]
+        public decimal? PredefinedPayoutValue => DeliveryPredefinedPayoutValue;
+
+        [Obsolete("Will be removed eventually, use the new properties instead.")]
+        public DriverCommissionCalculationType DriverCommissionCalculationType => DeliveryCommissionCalculationType;
+
+        public DriverCommissionCalculationType DeliveryCommissionCalculationType { get; set; }
+        public DriverCommissionCalculationType FuelSurchargeCommissionCalculationType { get; set; }
+        public DriverCommissionCalculationType ExtraFeesCommissionCalculationType { get; set; }
+
+        public decimal? DeliveryPredefinedPayoutValue { get; set; }
+        public decimal? FuelSurchargePredefinedPayoutValue { get; set; }
+        public decimal? ExtraFeesPredefinedPayoutValue { get; set; }
+
         public decimal? DeliveryCommissionPercentage { get; set; }
         public decimal? FuelSurchargeCommissionPercentage { get; set; }
-        public decimal? ExtraCommissionPercentage { get; set; }
+        public decimal? ExtraFeesCommissionPercentage { get; set; }
+
+        public int? DeliveryFixedPayoutScheduleId { get; set; }
+        public int? FuelSurchargeFixedPayoutScheduleId { get; set; }
+        public int? ExtraFeesFixedPayoutScheduleId { get; set; }
+
         public bool IsSetManually { get; set; }
 
         public DriverPayout[] DriverPayouts { get; set; } = Array.Empty<DriverPayout>();
@@ -50,7 +67,12 @@ namespace Dispatch.Scripts
 
             public bool PayFuelSurchargeCommissionOnFlatRate { get; set; }
 
-            public DriverCommissionCalculationType CalculationType { get; set; }
+            [Obsolete("Will be removed eventually, use the new properties instead.")]
+            public DriverCommissionCalculationType CalculationType => DeliveryCalculationType;
+
+            public DriverCommissionCalculationType DeliveryCalculationType { get; set; }
+            public DriverCommissionCalculationType ExtraFeesCalculationType { get; set; }
+            public DriverCommissionCalculationType FuelSurchargeCalculationType { get; set; }
 
             public string? SettlementId { get; set; }
 

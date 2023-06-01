@@ -4,6 +4,7 @@
     {
         DriverPayoutSchedule = 0,
         FlatRate = 1,
-        CommissionPercent = 2
+        CommissionPercent = 2,
+        FixedPayoutSchedule = 3
     }
 }
