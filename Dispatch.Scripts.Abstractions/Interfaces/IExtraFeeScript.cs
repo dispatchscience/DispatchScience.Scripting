@@ -36,6 +36,12 @@ public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo ord
         Quantity = 1,
         UnitPrice = 0
     };
+}
+
+public async Task<string?> ValidateFile(ScriptCell[] sheetValues)
+{
+    // TODO check if sheetValues make sense, if not return an error message, otherwise return null
+    return null;
 }";
     }
 }

@@ -29,6 +29,12 @@ public async Task OnOrderUpdate(IOrderUpdater order, IScriptDataProvider data, I
     {
         await order.RemoveAttribute(attributeId);
     }
+}
+
+public async Task<string?> ValidateFile(ScriptCell[] sheetValues)
+{
+    // TODO check if sheetValues make sense, if not return an error message, otherwise return null
+    return null;
 }";
     }
 }
