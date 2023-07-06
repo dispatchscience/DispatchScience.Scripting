@@ -10,9 +10,9 @@ namespace Dispatch.Scripts.Sample.Examples
     {
         //Originally created for tenant Mailpak
         //Calculate an extra fee based on all the parcels on the order. Each parcel type can have a different price.
-        public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IExtraFeeScriptFile file, IScriptDataProvider data, ILogger logger)
+        public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IScriptDataProvider data, ILogger logger)
         {
-            var sheetValues = await file.GetSheet();
+            var sheetValues = await data.GetSheet();
 
             var priceParcels = sheetValues.GroupBy(x => x.RowName);
 
