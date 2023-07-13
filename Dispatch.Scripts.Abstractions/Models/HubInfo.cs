@@ -13,5 +13,7 @@ namespace Dispatch.Scripts
         public TimeSpan StopDuration { get; set; }
 
         public string? StopNotes { get; set; }
+
+        public SegmentOverrideInfo[]? SegmentOverrideInfos { get; set; }
     }
 }
