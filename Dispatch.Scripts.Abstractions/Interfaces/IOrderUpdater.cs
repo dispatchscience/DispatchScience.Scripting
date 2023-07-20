@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Dispatch.Scripts
 {
@@ -195,5 +196,12 @@ namespace Dispatch.Scripts
         /// This method will throw if the changes result in the order having invalid time windows.
         /// </remarks>
         Task UpdateDeliveryWindow(TimeWindow newDeliveryWindow);
+
+        /// <summary>
+        /// Assign the order to a driver
+        /// </summary>
+        /// <param name="driverId">The driver id to assign the order to</param>
+        /// <param name="configureOptions">The action used to configure the options</param>
+        Task AssignDriver(string driverId, Action<DriverAssignationOptions>? configureOptions = null);
     }
 }
