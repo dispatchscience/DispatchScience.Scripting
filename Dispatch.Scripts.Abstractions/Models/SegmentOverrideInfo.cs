@@ -7,5 +7,7 @@
         public int? RoutePlanId { get; set; }
 
         public string? RouteName { get; set; }
+
+        public string? DriverId { get; set; }
     }
 }
