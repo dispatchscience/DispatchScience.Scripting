@@ -39,6 +39,16 @@ namespace Dispatch.Measures
             return new Weight(newValue, a.Unit);
         }
 
+        public static bool operator >(Weight a, Weight b)
+        {
+            return a.Value > b.ConvertTo(a.Unit).Value;
+        }
+
+        public static bool operator <(Weight a, Weight b)
+        {
+            return a.Value < b.ConvertTo(a.Unit).Value;
+        }
+
         public static Weight operator /(Weight a, int b) => new Weight(a.Value / b, a.Unit);
 
         public static Weight FromKilograms(double kilograms) => new Weight(kilograms, WeightUnit.Kilogram);

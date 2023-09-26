@@ -36,6 +36,16 @@ namespace Dispatch.Measures
             return new Volume(newValue, a.Unit);
         }
 
+        public static bool operator >(Volume a, Volume b)
+        {
+            return a.Value > b.ConvertTo(a.Unit).Value;
+        }
+
+        public static bool operator <(Volume a, Volume b)
+        {
+            return a.Value < b.ConvertTo(a.Unit).Value;
+        }
+
         public static Volume operator /(Volume a, int b) => new Volume(a.Value / b, a.Unit);
 
         public static Volume FromBox(double lengthX, double lengthY, double lengthZ, LengthUnit lengthUnit)
