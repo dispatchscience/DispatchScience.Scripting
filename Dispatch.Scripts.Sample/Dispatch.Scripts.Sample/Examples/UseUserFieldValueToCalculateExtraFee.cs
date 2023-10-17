@@ -6,9 +6,9 @@ namespace Dispatch.Scripts.Sample.Examples
 {
     public class UseUserFieldValueToCalculateExtraFee : IExtraFeeScript
     {
-        public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IExtraFeeScriptFile file, IScriptDataProvider data, ILogger logger)
+        public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IScriptDataProvider data, ILogger logger)
         {
-            var sheetValues = await file.GetSheet();
+            var sheetValues = await data.GetSheet();
 
             var userField = sheetValues.Where(x => x.ColumnName.ToLower() != "qty").FirstOrDefault();
 

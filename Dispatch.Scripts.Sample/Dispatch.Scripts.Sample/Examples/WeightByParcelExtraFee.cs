@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 namespace Dispatch.Scripts.Sample.Examples
 {
     public class WeightByParcelExtraFee : IExtraFeeScript
-    {
-        public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IExtraFeeScriptFile file, IScriptDataProvider data, ILogger logger)
+    {        
+        public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IScriptDataProvider data, ILogger logger)
         {
-            var priceSheet = await file.GetSheet();
+            var priceSheet = await data.GetSheet();
             if (priceSheet == null || order?.OrderItemInfos == null)
             {
                 return new ExtraFeeScriptResult { Quantity = 0, UnitPrice = 0 };
