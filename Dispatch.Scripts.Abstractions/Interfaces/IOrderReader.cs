@@ -54,9 +54,9 @@ namespace Dispatch.Scripts
         OrderTrackedItemInfo[] TrackedItems { get; }
         OrderItemInfo[] OrderItems { get; }
         Attachment[] Attachments { get; }
-        Workflow? PickupWorkflow { get; }
-        Workflow? DeliveryWorkflow { get; }
-        Workflow? AddItemWorkflow { get; }
+        IWorkflowReader? PickupWorkflow { get; }
+        IWorkflowReader? DeliveryWorkflow { get; }
+        IWorkflowReader? AddItemWorkflow { get; }
 
         OrderZone[] Zones { get; }
 

@@ -203,5 +203,9 @@ namespace Dispatch.Scripts
         /// <param name="driverId">The driver id to assign the order to</param>
         /// <param name="configureOptions">The action used to configure the options</param>
         Task AssignDriver(string driverId, Action<DriverAssignationOptions>? configureOptions = null);
+
+        new IWorkflowUpdater? PickupWorkflow { get; }
+        new IWorkflowUpdater? DeliveryWorkflow { get; }
+        new IWorkflowUpdater? AddItemWorkflow { get; }
     }
 }
