@@ -19,6 +19,16 @@ namespace Dispatch.Scripts
         Task<IList<HubInfo>> FindHubs(string hubName);
         Task<IList<Driver>> FindDrivers(string driverNumber);
 
+        /// <summary>
+        /// Returns the tenant's configured time zone.
+        /// </summary>
+        Task<TimeZoneInfo> GetSystemTimeZone();
+
+        /// <summary>
+        /// Returns the time zone at location. If location is not valid, returns the system time zone.
+        /// </summary>
+        Task<TimeZoneInfo> GetTimeZoneAtLocation(LatLng location);
+
         Task<ScriptCell[]> GetSheet(string? sheetName = null);
     }
 }
