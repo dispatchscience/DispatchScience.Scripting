@@ -69,6 +69,9 @@ namespace Dispatch.Scripts
 
         OrderType Type { get; }
 
+        public bool IsRouted => RouteId is not null;
+        public string? RouteId { get; }
+
         // Everything related to driver payout. Will throw an exception if called on a multisegment order. 
         IPayoutReader Payout { get; }
 

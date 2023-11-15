@@ -198,11 +198,31 @@ namespace Dispatch.Scripts
         Task UpdateDeliveryWindow(TimeWindow newDeliveryWindow);
 
         /// <summary>
+        /// Update both pickup and delivery windows of the order
+        /// </summary>
+        /// <param name="newPickupWindow">The new pickup window</param>
+        /// <param name="newDeliveryWindow">The new delivery window</param>
+        /// <remarks>
+        /// This method will throw if the changes result in the order having invalid time windows.
+        /// </remarks>
+        Task UpdateTimeWindows(TimeWindow newPickupWindow, TimeWindow newDeliveryWindow);
+
+        /// <summary>
         /// Assign the order to a driver
         /// </summary>
         /// <param name="driverId">The driver id to assign the order to</param>
         /// <param name="configureOptions">The action used to configure the options</param>
         Task AssignDriver(string driverId, Action<DriverAssignationOptions>? configureOptions = null);
+
+        /// <summary>
+        /// Converts a routed order to On-Demand
+        /// </summary>
+        Task ConvertToOnDemand();
+
+        /// <summary>
+        /// Move an order to a route. Use the IRouteScriptInfo object returned from IScriptDataProvider route methods.
+        /// </summary>
+        Task MoveToRoute(IRouteScriptInfo routeInfo);
 
         new IWorkflowUpdater? PickupWorkflow { get; }
         new IWorkflowUpdater? DeliveryWorkflow { get; }

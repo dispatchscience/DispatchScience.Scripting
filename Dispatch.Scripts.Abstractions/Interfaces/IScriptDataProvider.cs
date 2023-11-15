@@ -19,6 +19,9 @@ namespace Dispatch.Scripts
         Task<IList<HubInfo>> FindHubs(string hubName);
         Task<IList<Driver>> FindDrivers(string driverNumber);
 
+        Task<IRouteScriptInfo?> GetRouteInfo(string routeId);
+        Task<IRouteScriptInfo?> EvaluateRouteForOrder(IOrderReader order);
+
         /// <summary>
         /// Returns the tenant's configured time zone.
         /// </summary>
