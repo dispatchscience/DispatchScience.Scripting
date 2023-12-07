@@ -9,5 +9,6 @@
         public decimal TotalPrice { get; set; }
         public string? PickupZone { get; set; }
         public string? DeliveryZone { get; set; }
+        public bool? IsPriceOverridden { get; set; }
     }
 }
