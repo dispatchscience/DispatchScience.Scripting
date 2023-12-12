@@ -18,6 +18,7 @@ namespace Dispatch.Scripts
         Task<HolidayInfo> GetHoliday(DateTimeOffset date);
         Task<IList<HubInfo>> FindHubs(string hubName);
         Task<IList<Driver>> FindDrivers(string driverNumber);
+        Task<IDictionary<string, string>> GetDriverFields(string driverId);
 
         Task<IRouteScriptInfo?> GetRouteInfo(string routeId);
         Task<IRouteScriptInfo?> EvaluateRouteForOrder(IOrderReader order);
