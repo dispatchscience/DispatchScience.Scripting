@@ -20,7 +20,17 @@ namespace Dispatch.Scripts
         Task<IList<Driver>> FindDrivers(string driverNumber);
         Task<IDictionary<string, string>> GetDriverFields(string driverId);
 
+        /// <summary>
+        /// Returns the IRouteScriptInfo for a given routeId
+        /// </summary>
         Task<IRouteScriptInfo?> GetRouteInfo(string routeId);
+        /// <summary>
+        /// Returns the IRouteScriptInfo for the next route. You can pass a IRouteScriptInfo to get the route after the one provided.
+        /// </summary>
+        Task<IRouteScriptInfo?> GetNextRouteInfo(IOrderReader reader, IRouteScriptInfo? referenceRoute = null);
+        /// <summary>
+        /// Returns the IRouteScriptInfo that matches the order in it's current state
+        /// </summary>
         Task<IRouteScriptInfo?> EvaluateRouteForOrder(IOrderReader order);
 
         /// <summary>
