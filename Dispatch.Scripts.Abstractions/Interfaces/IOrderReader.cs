@@ -1,4 +1,5 @@
 ﻿using Dispatch.Measures;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,6 +30,9 @@ namespace Dispatch.Scripts
 
         TimeWindow PickupWindow { get; }
         TimeWindow DeliveryWindow { get; }
+
+        TimeSpan PickupDuration { get; }
+        TimeSpan DeliveryDuration { get; }
 
         ContactInfo PickupContact { get; }
         ContactInfo DeliveryContact { get; }
