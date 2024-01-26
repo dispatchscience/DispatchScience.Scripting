@@ -78,6 +78,8 @@ namespace Dispatch.Scripts
 
         OrderType Type { get; }
 
+        OrderSource Source { get; }
+
         public bool IsRouted => RouteId is not null;
         public string? RouteId { get; }
 
