@@ -26,6 +26,7 @@ namespace Dispatch.Scripts
             bool CanSkip { get; }
             WorkflowStepType StepType { get; }
             bool IsActive { get; }
+            string? UserFieldId { get; }
         }
     }
 }

@@ -73,9 +73,7 @@ namespace Dispatch.Scripts
         string? HoldExceptionCodeId { get; }
 
         OrderStatus Status { get; }
-
         OrderFulfillmentType FulfillmentType { get; }
-
         OrderType Type { get; }
 
         OrderSource Source { get; }

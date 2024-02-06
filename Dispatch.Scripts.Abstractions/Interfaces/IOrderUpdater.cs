@@ -180,6 +180,15 @@ namespace Dispatch.Scripts
         new Task<IOrderUpdater[]> GetSegmentOrders();
 
         /// <summary>
+        /// Update the note and includeWithInvoice flag of an attachment
+        /// </summary>
+        /// <param name="attachmentId"></param>
+        /// <param name="note"></param>
+        /// <param name="includeWithInvoice"></param>
+        /// <returns></returns>
+        Task UpdateAttachment(string attachmentId, string note, bool includeWithInvoice);
+
+        /// <summary>
         /// Update the pickup window of the order
         /// </summary>
         /// <param name="newPickupWindow">The new pickup window</param>
