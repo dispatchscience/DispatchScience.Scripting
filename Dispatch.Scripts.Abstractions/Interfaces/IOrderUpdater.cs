@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dispatch.Measures;
+using System;
 using System.Threading.Tasks;
 
 namespace Dispatch.Scripts
@@ -246,6 +247,11 @@ namespace Dispatch.Scripts
         /// Move an order to a route. Use the IRouteScriptInfo object returned from IScriptDataProvider route methods.
         /// </summary>
         Task MoveToRoute(IRouteScriptInfo routeInfo);
+
+        /// <summary>
+        /// Override the distance of the order.
+        /// </summary>
+        Task OverrideDistance(Length distance);
 
         new IWorkflowUpdater? PickupWorkflow { get; }
         new IWorkflowUpdater? DeliveryWorkflow { get; }
