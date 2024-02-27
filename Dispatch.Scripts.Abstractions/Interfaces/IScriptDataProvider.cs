@@ -11,6 +11,8 @@ namespace Dispatch.Scripts
 
         Task<IDictionary<string, string>> GetAccountFields();
         Task<AccountScriptInfo?> GetAccountInfo();
+        Task<AccountDiscountInfo?> FindAccountExtraFeeDiscount(string serviceLevelTypeId, string extraFeeTypeId);
+        Task<AccountDiscountInfo?> FindAccountPriceListDiscount(string serviceLevelTypeId);
         Task<MasterAccountScriptInfo?> GetMasterAccountInfo();
         Task<IList<string>> GetZones(ScriptZoneType zoneType, LatLng position);
         Task<IList<string>> GetAvailableExtraFeeTypes();

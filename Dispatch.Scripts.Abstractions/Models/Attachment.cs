@@ -7,5 +7,6 @@
         public bool IncludeWithInvoice { get; set; }
         public string? WorkflowStepId { get; set; }
         public string? FileName { get; set; }
+        public AttachmentType AttachmentType { get; set; }
     }
 }
