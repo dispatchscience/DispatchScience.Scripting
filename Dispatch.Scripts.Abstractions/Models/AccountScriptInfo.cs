@@ -9,5 +9,6 @@
         public string? Notes { get; set; }
         public int? ServiceLevelScheduleId { get; set; }
         public int? ExtraFeeScheduleId { get; set; }
+        public bool PackageValidationOptionCanBeOverridenOnOrder { get; set; }
     }
 }

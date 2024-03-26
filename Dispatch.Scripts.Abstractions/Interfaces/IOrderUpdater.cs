@@ -253,6 +253,11 @@ namespace Dispatch.Scripts
         /// </summary>
         Task OverrideDistance(Length distance);
 
+        /// <summary>
+        /// Override the package validation options. The account must allow PackageValidationOption to be overriden on the order, this can be verified using AccountScriptInfo.PackageValidationOptionCanBeOverridenOnOrder;
+        /// </summary>
+        Task UpdatePackageValidationOptions(PackageValidationOptions packageValidationOptions);
+
         new IWorkflowUpdater? PickupWorkflow { get; }
         new IWorkflowUpdater? DeliveryWorkflow { get; }
         new IWorkflowUpdater? AddItemWorkflow { get; }

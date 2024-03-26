@@ -62,6 +62,8 @@ namespace Dispatch.Scripts
         IWorkflowReader? DeliveryWorkflow { get; }
         IWorkflowReader? AddItemWorkflow { get; }
 
+        public PackageValidationOptions? PackageValidationOptions { get; }
+
         decimal? CollectOnDelivery { get; }
         decimal? CollectOnPickup { get; }
         bool AllowPartialCollectOnDelivery { get; }
