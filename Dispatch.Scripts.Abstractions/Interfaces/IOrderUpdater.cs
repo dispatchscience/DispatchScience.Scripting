@@ -186,8 +186,9 @@ namespace Dispatch.Scripts
         /// <param name="attachmentId"></param>
         /// <param name="note"></param>
         /// <param name="includeWithInvoice"></param>
+        /// <param name="visibleForDriver"></param>
         /// <returns></returns>
-        Task UpdateAttachment(string attachmentId, string note, bool includeWithInvoice);
+        Task UpdateAttachment(string attachmentId, string note, bool includeWithInvoice, bool visibleForDriver = true);
 
         /// <summary>
         /// Update the pickup window of the order
