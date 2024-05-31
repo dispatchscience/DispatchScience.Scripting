@@ -26,14 +26,20 @@ namespace Dispatch.Scripts
 
         public string? VehicleTypeId { get; set; }
 
+        public string ReferenceNumber1 { get; set; }
+
+        public string ReferenceNumber2 { get; set; }
+
+        public string ReferenceNumber3 { get; set; }
+
         public TimeSpan PickupDuration { get; set; }
 
         public TimeSpan DeliveryDuration { get; set; }
 
         public DeliveryChargeInfo DeliveryCharge { get; set; } = new DeliveryChargeInfo();
-
+        
         public IList<(string UserFieldId, string Value)> UserFields = new List<(string UserFieldId, string Value)>();
-
+        
         public IList<OrderItemInfo> OrderItemInfos { get; set; } = new List<OrderItemInfo>();
     }
 
