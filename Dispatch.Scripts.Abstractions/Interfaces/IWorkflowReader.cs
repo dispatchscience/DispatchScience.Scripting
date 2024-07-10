@@ -27,6 +27,7 @@ namespace Dispatch.Scripts
             WorkflowStepType StepType { get; }
             bool IsActive { get; }
             string? UserFieldId { get; }
+            string? Tag { get; }
         }
     }
 }
