@@ -259,6 +259,22 @@ namespace Dispatch.Scripts
         /// </summary>
         Task UpdatePackageValidationOptions(PackageValidationOptions packageValidationOptions);
 
+        /// <summary>
+        /// Recalculate different order charges.
+        /// </summary>
+        Task RecalculateCharges(
+            bool updateDeliveryCharge = true,
+            bool updateWeightExtraFee = true,
+            bool updateNumberOfPiecesExtraFee = true,
+            bool updateMileageAffectedExtraFees = true,
+            bool updateVehicleAffectedExtraFees = true,
+            bool updateScriptedExtraFees = true);
+
+        /// <summary>
+        /// Recalculate order windows according to readyAt
+        /// </summary>
+        Task RecalculateWindows();
+
         new IWorkflowUpdater? PickupWorkflow { get; }
         new IWorkflowUpdater? DeliveryWorkflow { get; }
         new IWorkflowUpdater? AddItemWorkflow { get; }
