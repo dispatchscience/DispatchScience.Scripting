@@ -57,6 +57,7 @@ namespace Dispatch.Scripts
         OrderExtraFeeInfo[] ExtraFees { get; }
         OrderTrackedItemInfo[] TrackedItems { get; }
         OrderItemInfo[] OrderItems { get; }
+        OrderExceptionCodeInfo[] ExceptionCodes { get; }
         Attachment[] Attachments { get; }
         IWorkflowReader? PickupWorkflow { get; }
         IWorkflowReader? DeliveryWorkflow { get; }

@@ -104,6 +104,36 @@ namespace Dispatch.Scripts
         Task AddOrUpdateItemUserField(string itemId, string userFieldId, string userFieldValue);
 
         /// <summary>
+        /// Adds exception codes to the order. Codes must be associated to the account in the exception code schedule
+        /// Exception codes need to be configured for the "Added At" specified
+        /// </summary>
+        /// <param name="exceptionCodeTypeIds">List of exception codes to add</param>
+        /// <param name="addedAt">Where to add the exception : pickup, delivery, etc...</param>
+        Task AddOrderExceptionCodes(string[] exceptionCodeTypeIds, OrderExceptionCodeAddedAt addedAt);
+
+        /// <summary>
+        /// Removes exception codes. Codes must be associated to the order.
+        /// </summary>
+        /// <param name="exceptionCodeIds">List of exception codes to remove</param>
+        Task RemoveOrderExceptionCodes(string[] exceptionCodeTypeIds);
+
+        /// <summary>
+        /// Adds exception codes to an item of the order. Codes must be associated to the account in the exception code schedule
+        /// Exception codes need to be configured for the "Added At" specified
+        /// </summary>
+        /// <param name="exceptionCodeTypeIds">List of exception codes to add</param>
+        /// <param name="itemId">The item id to associate the exception codes to</param>
+        /// <param name="addedAt">Where to add the exception : pickup, delivery, etc...</param>                
+        Task AddItemExceptionCodes(string[] exceptionCodeTypeIds, string itemId, OrderExceptionCodeAddedAt addedAt);
+
+        /// <summary>
+        /// Removes exception codes. Codes must be associated to the order item.
+        /// </summary>
+        /// <param name="exceptionCodeIds">List of exception codes to remove</param>
+        /// <param name="itemId">The item id to associate the exception codes to</param>
+        Task RemoveItemExceptionCodes(string itemId, string[] exceptionCodeTypeIds);
+
+        /// <summary>
         /// Enable or disable proof of delivery generation on order delivery.
         /// </summary>
         /// <remarks>

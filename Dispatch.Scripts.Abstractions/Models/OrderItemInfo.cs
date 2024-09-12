@@ -14,5 +14,6 @@ namespace Dispatch.Scripts
         public Length Height { get; set; }
         public string? BarcodeTemplate { get; set; }
         public IList<(string UserFieldId, string Value)> UserFields = new List<(string UserFieldId, string Value)>();
+        public IList<OrderExceptionCodeInfo> ExceptionCodes = new List<OrderExceptionCodeInfo>();
     }
 }
