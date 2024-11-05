@@ -132,7 +132,14 @@ namespace Dispatch.Scripts.Abstractions
 
             foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(obj.GetType()))
             {
-                expando.TryAdd(property.Name, property.GetValue(obj));
+                try
+                {
+                    expando.TryAdd(property.Name, property.GetValue(obj));
+                }
+                catch (Exception)
+                {
+                    // property probably throws an exception for this configuration, ignore it
+                }
             }
 
             return expando;
