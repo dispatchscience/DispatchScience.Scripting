@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
@@ -18,10 +19,12 @@ namespace Dispatch.Scripts.Abstractions
 
         private IDictionary<string, object>? _debugData;
         private readonly JsonNode? _jsonData;
+        private readonly ILogger _logger;
 
-        public ScriptDebugWrapper()
+        public ScriptDebugWrapper(ILogger logger)
         {
             _debugData = new Dictionary<string, object>();
+            _logger = logger;
         }
 
         public ScriptDebugWrapper(JsonNode jsonData)
@@ -36,22 +39,29 @@ namespace Dispatch.Scripts.Abstractions
                 throw new Exception("Cannot write data in this mode.");
             }
 
-            var context = ScriptDataProvider;
-
-            if (!_debugData.TryGetValue(context, out var data))
+            try
             {
-                data = new ExpandoObject();
-                _debugData.TryAdd(context, data);
-            }
+                var context = ScriptDataProvider;
 
-            var keyParts = new List<string> { methodName };
-            if (args is not null)
+                if (!_debugData.TryGetValue(context, out var data))
+                {
+                    data = new ExpandoObject();
+                    _debugData.TryAdd(context, data);
+                }
+
+                var keyParts = new List<string> { methodName };
+                if (args is not null)
+                {
+                    keyParts.AddRange(args.Select(x => x.ToString()).Cast<string>().ToArray());
+                }
+                var key = string.Join("|", keyParts);
+
+                ((ExpandoObject)data).TryAdd(key, value);
+            }
+            catch (Exception ex)
             {
-                keyParts.AddRange(args.Cast<string>());
+                _logger.LogError(ex, $"Error occurred when trying to AddScriptDataCall of {methodName}");
             }
-            var key = string.Join("|", keyParts);
-
-            ((ExpandoObject)data).TryAdd(key, value);
         }
 
         public void AddProperty(string propertyName, object value)
@@ -61,7 +71,14 @@ namespace Dispatch.Scripts.Abstractions
                 throw new Exception("Cannot write data in this mode.");
             }
 
-            _debugData.TryAdd(propertyName, value);
+            try
+            {
+                _debugData.TryAdd(propertyName, value);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred when trying to AddProperty of {propertyName}");
+            }
         }
 
         public void AddOrderReader(string orderId, IOrderReader value)
@@ -71,7 +88,14 @@ namespace Dispatch.Scripts.Abstractions
                 throw new Exception("Cannot write data in this mode.");
             }
 
-            _debugData.TryAdd($"{OrderReader}_{orderId}", ToExpandoObject(value));
+            try
+            {
+                _debugData.TryAdd($"{OrderReader}_{orderId}", ToExpandoObject(value));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred when trying to AddOrderReader of {orderId}");
+            }
         }
 
         public T? GetScriptDataCall<T>(string methodName, params object[] args)

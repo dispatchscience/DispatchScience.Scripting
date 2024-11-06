@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.FormattableString;
 
 namespace Dispatch.Scripts
 {
@@ -25,6 +26,11 @@ namespace Dispatch.Scripts
 
                 return Math.Abs(Latitude) <= 90d && Math.Abs(Longitude) <= 180d;
             }
+        }
+
+        public override string ToString()
+        {
+            return Invariant($"{Latitude},{Longitude}");
         }
     }
 }
