@@ -47,5 +47,10 @@ namespace Dispatch.Scripts
         Task<TimeZoneInfo> GetTimeZoneAtLocation(LatLng location);
 
         Task<ScriptCell[]> GetSheet(string? sheetName = null);
+
+        /// <summary>
+        /// Returns information about the execution of the script such as the script id, the extra fee, etc... Values could be null if not available for script type.
+        /// </summary>
+        Task<ScriptExecutionContext> GetExecutionContext();
     }
 }

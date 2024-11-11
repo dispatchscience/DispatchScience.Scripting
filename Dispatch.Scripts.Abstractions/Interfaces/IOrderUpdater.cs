@@ -249,6 +249,14 @@ namespace Dispatch.Scripts
         Task UpdateTimeWindows(TimeWindow newPickupWindow, TimeWindow newDeliveryWindow);
 
         /// <summary>
+        /// Update the ready at of the order
+        /// </summary>
+        /// <param name="readyAt">The new ready at</param>
+        /// <param name="recalculateWindows">Recalculate the windows after changing the ready at</param>
+        /// <returns></returns>
+        Task UpdateReadyAt(DateTimeOffset readyAt, bool recalculateWindows = true);
+
+        /// <summary>
         /// Update the pickup load duration of the order
         /// </summary>
         /// <param name="newDuration">The new pickup load duration. Value must be between 0 and 120 minutes.</param>
