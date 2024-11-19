@@ -4,7 +4,7 @@ namespace Dispatch.Scripts
 {
     public class OrderEventDates
     {
-        public DateTimeOffset Created { get; set; }
+        public DateTimeOffset? Created { get; set; }
         public DateTimeOffset? Dispatched { get; set; }
         public DateTimeOffset? Accepted { get; set; }
         public DateTimeOffset? ArrivedAtPickup { get; set; }
