@@ -52,7 +52,7 @@ namespace Dispatch.Scripts.Abstractions
                 var keyParts = new List<string> { methodName };
                 if (args is not null)
                 {
-                    keyParts.AddRange(args.Select(x => x.ToString()).Cast<string>().ToArray());
+                    keyParts.AddRange(args.Select(x => x?.ToString()).Cast<string>().ToArray());
                 }
                 var key = string.Join("|", keyParts);
 
