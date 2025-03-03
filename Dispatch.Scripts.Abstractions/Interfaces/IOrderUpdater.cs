@@ -313,6 +313,14 @@ namespace Dispatch.Scripts
         /// </summary>
         Task RecalculateWindows();
 
+        /// <summary>
+        /// Override the tax schedule that will be used for tax calculation when generating the invoice.
+        /// </summary>
+        /// <remarks>
+        /// This method will throw if the account is configured with a non-overridable tax schedule.
+        /// </remarks>
+        Task OverrideTaxSchedule(string? taxScheduleId);
+
         new IWorkflowUpdater? PickupWorkflow { get; }
         new IWorkflowUpdater? DeliveryWorkflow { get; }
         new IWorkflowUpdater? AddItemWorkflow { get; }

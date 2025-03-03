@@ -87,6 +87,8 @@ namespace Dispatch.Scripts
         // Everything related to driver payout. Will throw an exception if called on a multisegment order. 
         IPayoutReader Payout { get; }
 
+        string? OverriddenTaxScheduleId { get; }
+
         bool HasSegmentsPendingCreation { get; }
 
         /// <summary>
