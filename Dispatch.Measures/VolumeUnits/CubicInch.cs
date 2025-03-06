@@ -5,7 +5,6 @@ namespace Dispatch.Measures
     {
         public CubicInch(): base(1/61023.7, "in³")
         {
-            
         }
 
         public override double GetConversionFactorTo(VolumeUnit otherUnit) => otherUnit switch

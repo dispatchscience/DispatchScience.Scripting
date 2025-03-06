@@ -3,7 +3,8 @@ namespace Dispatch.Measures
 {
     public sealed class Kilogram: WeightUnit
     {
-        public override double SIConversionFactor => 1d;
-        public override string Symbol => "kg";
+        public Kilogram() : base(1d, "kg")
+        {
+        }
     }
 }

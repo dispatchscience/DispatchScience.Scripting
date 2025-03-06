@@ -1,10 +1,12 @@
 #nullable enable
+using Newtonsoft.Json;
 using System;
 
 namespace Dispatch.Measures
 {
     public class VolumeUnit: UnitOfMeasure<VolumeUnit>
     {
+        [JsonConstructor]
         protected VolumeUnit(double siConversionFactor, string symbol)
         {
             SIConversionFactor = siConversionFactor;
@@ -21,6 +23,7 @@ namespace Dispatch.Measures
             CubicFoot = new CubicFoot();
             CubicInch = new CubicInch();
         }
+
         public static VolumeUnit SIUnit  => CubicMeter;
         public static VolumeUnit CubicMeter { get; }
         public static VolumeUnit Liter { get; }

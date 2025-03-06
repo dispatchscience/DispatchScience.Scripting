@@ -1,10 +1,20 @@
 #nullable enable
-using System;
+using Newtonsoft.Json;
 
 namespace Dispatch.Measures
 {
-    public abstract class LengthUnit: UnitOfMeasure<LengthUnit>
+    public class LengthUnit: UnitOfMeasure<LengthUnit>
     {
+        [JsonConstructor]
+        protected LengthUnit(double siConversionFactor, string symbol)
+        {
+            SIConversionFactor = siConversionFactor;
+            Symbol = symbol;
+        }
+
+        public override double SIConversionFactor { get; }
+        public override string Symbol { get; }
+
         static LengthUnit()
         {
             Meter = new Meter();

@@ -3,8 +3,9 @@ namespace Dispatch.Measures
 {
     public sealed class Inch: LengthUnit
     {
-        public override double SIConversionFactor => 0.0254d;
-        public override string Symbol => "in";
+        public Inch() : base(0.0254d, "in")
+        {
+        }
 
         public override double GetConversionFactorTo(LengthUnit otherUnit) => otherUnit switch
         {

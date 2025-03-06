@@ -3,8 +3,9 @@ namespace Dispatch.Measures
 {
     public sealed class Foot: LengthUnit
     {
-        public override double SIConversionFactor => 0.3048d;
-        public override string Symbol => "ft";
+        public Foot() : base(0.3048d, "ft")
+        {
+        }
 
         public override double GetConversionFactorTo(LengthUnit otherUnit) => otherUnit switch
         {

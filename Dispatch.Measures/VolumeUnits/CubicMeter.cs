@@ -5,7 +5,6 @@ namespace Dispatch.Measures
     {
         public CubicMeter() :base(1d, "m³")
         {
-            
         }
     }
 }

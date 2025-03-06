@@ -5,7 +5,6 @@ namespace Dispatch.Measures
     {
         public CubicFoot(): base(0.0283168d, "ft³")
         {
-            
         }
 
         public override double GetConversionFactorTo(VolumeUnit otherUnit) => otherUnit switch

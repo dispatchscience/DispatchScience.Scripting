@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
-using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace Dispatch.Scripts.Abstractions
@@ -13,6 +13,7 @@ namespace Dispatch.Scripts.Abstractions
     {
         public static string ScriptDataProvider = nameof(ScriptDataProvider);
         public static string OrderReader = nameof(OrderReader);
+        public static string OrderScriptInfo = nameof(OrderScriptInfo);
         public static string OrderId = nameof(OrderId);
         public static string MultiSegmentOrderId = nameof(MultiSegmentOrderId);
         public static string SegmentOrderIds = nameof(SegmentOrderIds);
@@ -98,6 +99,23 @@ namespace Dispatch.Scripts.Abstractions
             }
         }
 
+        public void AddOrderScriptInfo(OrderScriptInfo value)
+        {
+            if (_debugData is null)
+            {
+                throw new Exception("Cannot write data in this mode.");
+            }
+
+            try
+            {
+                _debugData.TryAdd($"{OrderScriptInfo}", ToExpandoObject(value));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred when trying to AddOrderScriptInfo");
+            }
+        }
+
         public T? GetScriptDataCall<T>(string methodName, params object[] args)
         {
             if (_jsonData is null)
@@ -112,7 +130,10 @@ namespace Dispatch.Scripts.Abstractions
             }
 
             var keyParts = new List<string> { methodName };
-            keyParts.AddRange(args.Cast<string>());
+            if (args is not null)
+            {
+                keyParts.AddRange(args.Select(x => x?.ToString()).Cast<string>().ToArray());
+            }
             var key = string.Join("|", keyParts);
 
             var value = data[key];
@@ -121,7 +142,7 @@ namespace Dispatch.Scripts.Abstractions
                 return default;
             }
 
-            return JsonSerializer.Deserialize<T>(value.ToJsonString());
+            return JsonConvert.DeserializeObject<T>(value.ToJsonString());
         }
 
         public T GetProperty<T>(string propertyName)
@@ -147,7 +168,23 @@ namespace Dispatch.Scripts.Abstractions
                 return default;
             }
 
-            return JsonSerializer.Deserialize<T>(data.ToJsonString());
+            return JsonConvert.DeserializeObject<T>(data.ToJsonString());
+        }
+
+        public OrderScriptInfo? GetOrderScriptInfo()
+        {
+            if (_jsonData is null)
+            {
+                throw new Exception("Cannot read data in this mode.");
+            }
+
+            var data = _jsonData[OrderScriptInfo];
+            if (data is null)
+            {
+                return default;
+            }
+
+            return JsonConvert.DeserializeObject<OrderScriptInfo>(data.ToJsonString());
         }
 
         private ExpandoObject ToExpandoObject(object obj)

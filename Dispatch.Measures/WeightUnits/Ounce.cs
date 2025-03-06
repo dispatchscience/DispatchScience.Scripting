@@ -3,8 +3,9 @@ namespace Dispatch.Measures
 {
     public sealed class Ounce : WeightUnit
     {
-        public override double SIConversionFactor => 0.0283495d;
-        public override string Symbol => "oz";
+        public Ounce() : base(0.0283495d, "oz")
+        {
+        }
 
         public override double GetConversionFactorTo(WeightUnit otherUnit) => otherUnit switch
         {
