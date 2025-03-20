@@ -28,10 +28,13 @@ namespace Dispatch.Scripts.Abstractions
             _logger = logger;
         }
 
-        public ScriptDebugWrapper(JsonNode jsonData)
+        public ScriptDebugWrapper(JsonNode jsonData, ILogger logger)
         {
             _jsonData = jsonData;
+            _logger = logger;
         }
+
+        public ILogger Logger => _logger;
 
         public void AddScriptDataCall(string methodName, object value, params object[] args)
         {
