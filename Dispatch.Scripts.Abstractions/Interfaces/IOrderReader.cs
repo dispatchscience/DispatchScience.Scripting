@@ -53,6 +53,8 @@ namespace Dispatch.Scripts
         decimal TotalFuelSurcharge { get; }
         decimal TotalOrderPrice { get; }
 
+        Weight TotalWeight { get; }
+
         OrderDeliveryChargeInfo[] DeliveryCharges { get; }
         OrderExtraFeeInfo[] ExtraFees { get; }
         OrderTrackedItemInfo[] TrackedItems { get; }
