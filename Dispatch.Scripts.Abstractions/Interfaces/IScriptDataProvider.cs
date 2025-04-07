@@ -56,7 +56,7 @@ namespace Dispatch.Scripts
         /// <param name="sheetName">The sheet name to load, if none is provided, it assumes there's only one uploaded and will load it.</param>
         /// <param name="additionalInitializer">If you need to do additional initialization of your data objects, this is where to do it. Please note that the initialized data will be kept in cache, meaning the initializer should be idempotent. If you need to have different initializer, you should use a different user-defined T class.</param>
         /// <returns>The script data.</returns>
-        Task<T[]> GetSheet<T>(string? sheetName = null, Action<(T DataObject, IGrouping<int?, ScriptCell> RowData, (string Name, int Number)[] AvailableColumns)>? additionalInitializer = null) where T : IScriptData, new();
+        Task<T[]> GetSheet<T>(string? sheetName = null, Action<(T DataObject, IGrouping<int?, ScriptCell> RowData, (string Name, string RawName, int Number)[] AvailableColumns)>? additionalInitializer = null) where T : IScriptData, new();
 
         /// <summary>
         /// Returns information about the execution of the script such as the script id, the extra fee, etc... Values could be null if not available for script type.

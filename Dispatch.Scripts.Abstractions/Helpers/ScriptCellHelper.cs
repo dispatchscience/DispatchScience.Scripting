@@ -134,7 +134,7 @@ namespace Dispatch.Scripts
             return result;
         }
 
-        public static T[] MapSheet<T>(ScriptCell[] sheetItems, ILogger logger, Action<(T DataObject, IGrouping<int?, ScriptCell> RowData, (string Name, int Number)[] AvailableColumns)>? additionalInitializer = null) where T : IScriptData, new()
+        public static T[] MapSheet<T>(ScriptCell[] sheetItems, ILogger logger, Action<(T DataObject, IGrouping<int?, ScriptCell> RowData, (string Name, string RawName, int Number)[] AvailableColumns)>? additionalInitializer = null) where T : IScriptData, new()
         {
             if (sheetItems is null || sheetItems.Length == 0)
             {
@@ -144,10 +144,11 @@ namespace Dispatch.Scripts
             var result = new List<T>();
 
             var properties = typeof(T).GetProperties();
+            var stringsToIgnoreInColumnNames = typeof(T).GetCustomAttribute<MappedClassAttribute>()?.StringsToIgnoreInColumnNames ?? [];
 
             var columns = sheetItems
                 .Where(x => !string.IsNullOrWhiteSpace(x.ColumnName))
-                .Select(x => (Name: x.ColumnName!, Number: x.ColumnNumber!.Value))
+                .Select(x => (Name: GetCleanedColumnName(x.ColumnName!, stringsToIgnoreInColumnNames)!, RawName: x.ColumnName!, Number: x.ColumnNumber!.Value))
                 .Distinct()
                 .OrderBy(x => x.Number)
                 .ToArray();
@@ -170,7 +171,7 @@ namespace Dispatch.Scripts
                     }
                     else
                     {
-                        var val = GetValueFromSheet(row.FirstOrDefault(x => columnName.Equals(x.ColumnName, StringComparison.CurrentCultureIgnoreCase))?.CellValue, property.PropertyType, logger, property);
+                        var val = GetValueFromSheet(row.FirstOrDefault(x => columnName.Equals(GetCleanedColumnName(x.ColumnName, stringsToIgnoreInColumnNames), StringComparison.CurrentCultureIgnoreCase))?.CellValue, property.PropertyType, logger, property);
                         if (val is not null)
                         {
                             if (property.SetMethod is not null)
@@ -196,6 +197,21 @@ namespace Dispatch.Scripts
         {
             var mappedPropertyAttribute = property.GetCustomAttribute<MappedPropertyAttribute>();
             return mappedPropertyAttribute?.ColumnName ?? property.Name;
+        }
+
+        private static string? GetCleanedColumnName(string? columnName, string[] stringsToIgnoreInColumnNames)
+        {
+            if (columnName is null)
+            {
+                return null;
+            }
+
+            foreach (var stringToIgnore in stringsToIgnoreInColumnNames)
+            {
+                columnName = columnName.Replace(stringToIgnore, string.Empty);
+            }
+
+            return columnName;
         }
 
         private static CultureInfo GetCultureInfoForNumberParsing(string cellValue)
