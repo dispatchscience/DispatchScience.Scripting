@@ -227,7 +227,7 @@ namespace Dispatch.Scripts
 
         private static string? KeepNumericValues(string? value)
         {
-            var digits = value?.Where(x => char.IsDigit(x) || x == '.' || x == ',').ToArray();
+            var digits = value?.Where(x => char.IsDigit(x) || x == '.' || x == ',' || x == '-').ToArray();
             if (digits is null || !digits.Any())
             {
                 return null;

@@ -123,7 +123,7 @@ namespace Dispatch.Scripts
         /// </summary>
         /// <param name="exceptionCodeTypeIds">List of exception codes to add</param>
         /// <param name="itemId">The item id to associate the exception codes to</param>
-        /// <param name="addedAt">Where to add the exception : pickup, delivery, etc...</param>                
+        /// <param name="addedAt">Where to add the exception : pickup, delivery, etc...</param>
         Task AddItemExceptionCodes(string[] exceptionCodeTypeIds, string itemId, OrderExceptionCodeAddedAt addedAt);
 
         /// <summary>
@@ -271,6 +271,28 @@ namespace Dispatch.Scripts
         Task UpdateDeliveryDuration(TimeSpan newDuration, bool preventRelatedSegmentUpdate = false);
 
         /// <summary>
+        /// Update the pickup address of the order. If updating the pickup address of a multisegment order, the pickup address of the first segment will automatically be updated, and vice versa.
+        /// </summary>
+        /// <param name="newPickupAddress">The new pickup address</param>
+        /// <param name="configureOptions">The action used to configure the options</param>
+        Task UpdatePickupAddress(Address newPickupAddress, Action<PricingUpdateOptions>? configureOptions = null);
+
+        /// <summary>
+        /// Update the delivery address of the order. If updating the delivery address of a multisegment order, the delivery address of the last segment will automatically be updated, and vice versa.
+        /// </summary>
+        /// <param name="newPickupAddress">The new delivery address</param>
+        /// <param name="configureOptions">The action used to configure the options</param>
+        Task UpdateDeliveryAddress(Address newDeliveryAddress, Action<PricingUpdateOptions>? configureOptions = null);
+
+        /// <summary>
+        /// Update the addresses of the order. If updating the pickup address or delivery address of a multisegment order, the corresponding segments will automatically be updated, and vice versa.
+        /// </summary>
+        /// <param name="newPickupAddress">The new pickup address</param>
+        /// <param name="newPickupAddress">The new delivery address</param>
+        /// <param name="configureOptions">The action used to configure the options</param>
+        Task UpdateAddresses(Address newPickupAddress, Address newDeliveryAddress, Action<PricingUpdateOptions>? configureOptions = null);
+
+        /// <summary>
         /// Assign the order to a driver
         /// </summary>
         /// <param name="driverId">The driver id to assign the order to</param>
@@ -300,6 +322,7 @@ namespace Dispatch.Scripts
         /// <summary>
         /// Recalculate different order charges.
         /// </summary>
+        [Obsolete("Use RecalculateCharges(Action<PricingUpdateOptions>? configureOptions = null) instead")]
         Task RecalculateCharges(
             bool updateDeliveryCharge = true,
             bool updateWeightExtraFee = true,
@@ -307,6 +330,12 @@ namespace Dispatch.Scripts
             bool updateMileageAffectedExtraFees = true,
             bool updateVehicleAffectedExtraFees = true,
             bool updateScriptedExtraFees = true);
+
+        /// <summary>
+        /// Recalculate different order charges.
+        /// </summary>
+        /// <param name="configureOptions">The action used to configure the options</param>
+        Task RecalculateCharges(Action<PricingUpdateOptions>? configureOptions = null);
 
         /// <summary>
         /// Recalculate order windows according to readyAt
