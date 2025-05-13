@@ -28,6 +28,7 @@ namespace Dispatch.Scripts
 
         Driver? AssignedDriver { get; }
 
+        DateTimeOffset? ReadyAt { get; }
         TimeWindow PickupWindow { get; }
         TimeWindow DeliveryWindow { get; }
 
