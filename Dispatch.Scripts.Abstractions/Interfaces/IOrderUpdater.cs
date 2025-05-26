@@ -280,7 +280,7 @@ namespace Dispatch.Scripts
         /// <summary>
         /// Update the delivery address of the order. If updating the delivery address of a multisegment order, the delivery address of the last segment will automatically be updated, and vice versa.
         /// </summary>
-        /// <param name="newPickupAddress">The new delivery address</param>
+        /// <param name="newDeliveryAddress">The new delivery address</param>
         /// <param name="configureOptions">The action used to configure the options</param>
         Task UpdateDeliveryAddress(Address newDeliveryAddress, Action<PricingUpdateOptions>? configureOptions = null);
 
@@ -291,6 +291,24 @@ namespace Dispatch.Scripts
         /// <param name="newPickupAddress">The new delivery address</param>
         /// <param name="configureOptions">The action used to configure the options</param>
         Task UpdateAddresses(Address newPickupAddress, Address newDeliveryAddress, Action<PricingUpdateOptions>? configureOptions = null);
+
+        /// <summary>
+        /// Update the pickup contact of the order.
+        /// </summary>
+        /// <param name="name">The new pickup contact name</param>
+        /// <param name="phoneNumber">The new pickup contact phone number</param>
+        /// <param name="email">The new pickup contact email</param>
+        /// <param name="language">The new pickup contact language</param>
+        Task UpdatePickupContact(string? name, string? phoneNumber, string? email, string? language);
+
+        /// <summary>
+        /// Update the delivery contact of the order.
+        /// </summary>
+        /// <param name="name">The new delivery contact name</param>
+        /// <param name="phoneNumber">The new delivery contact phone number</param>
+        /// <param name="email">The new delivery contact email</param>
+        /// <param name="language">The new delivery contact language</param>
+        Task UpdateDeliveryContact(string? name, string? phoneNumber, string? email, string? language);
 
         /// <summary>
         /// Assign the order to a driver
