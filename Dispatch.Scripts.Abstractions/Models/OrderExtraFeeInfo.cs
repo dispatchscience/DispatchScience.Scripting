@@ -1,4 +1,6 @@
-﻿namespace Dispatch.Scripts
+﻿using System.Collections.Generic;
+
+namespace Dispatch.Scripts
 {
     public class OrderExtraFeeInfo
     {
@@ -9,5 +11,6 @@
         public decimal Price { get; set; }
         public decimal FuelSurcharge { get; set; }
         public decimal TotalPrice { get; set; }
+        public IDictionary<string, object>? ScriptMetadata { get; set; }
     }
 }
