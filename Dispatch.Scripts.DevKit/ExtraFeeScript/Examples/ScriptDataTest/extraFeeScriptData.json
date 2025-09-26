@@ -1,0 +1,110 @@
+{
+  "OrderScriptInfo": {
+    "Distance": {
+      "Value": 1246.584,
+      "Unit": {
+        "SIConversionFactor": 1.0,
+        "Symbol": "m"
+      }
+    },
+    "OrderType": 0,
+    "PickupAddress": {
+      "AddressLine1": "7250 rue Mile end",
+      "AddressLine2": "",
+      "Company": "",
+      "City": "Montréal",
+      "ZipPostalCode": "H2R 3A4",
+      "StateProvince": "Québec",
+      "Location": {
+        "Latitude": 45.5316122,
+        "Longitude": -73.6249363,
+        "IsValid": true
+      }
+    },
+    "DeliveryAddress": {
+      "AddressLine1": "7250 Rue Mile End",
+      "AddressLine2": "",
+      "Company": "",
+      "City": "Montréal",
+      "ZipPostalCode": "H2R",
+      "StateProvince": "QC",
+      "Location": {
+        "Latitude": 45.53158,
+        "Longitude": -73.62263,
+        "IsValid": true
+      }
+    },
+    "PickupFromTime": "2025-03-01T07:00:00-05:00",
+    "PickupToTime": "2025-03-01T09:00:00-05:00",
+    "DeliveryFromTime": "2025-03-01T07:00:00-05:00",
+    "DeliveryToTime": "2025-03-01T09:00:00-05:00",
+    "ServiceLevelTypeId": "LD",
+    "VehicleTypeId": "CAR",
+    "ReferenceNumber1": "",
+    "ReferenceNumber2": "",
+    "ReferenceNumber3": "",
+    "PickupDuration": "00:00:00",
+    "DeliveryDuration": "00:00:00",
+    "DeliveryCharge": {
+      "BasePrice": 2.0,
+      "VehicleSurcharge": 0.0,
+      "PickupPricingZone": "6502",
+      "DeliveryPricingZone": "6550"
+    },
+    "OrderItemInfos": [],
+    "EventDates": {
+      "Created": "2025-02-28T14:22:38.3477815-05:00",
+      "Dispatched": null,
+      "Accepted": null,
+      "ArrivedAtPickup": null,
+      "PickedUp": null,
+      "ArrivedAtDelivery": null,
+      "Delivered": null,
+      "Cancelled": null
+    }
+  },
+  "ScriptDataProvider": {
+    "GetSheet|Weight": [
+      {
+        "SheetName": "Weight",
+        "ColumnNumber": 1,
+        "RowNumber": 2,
+        "ColumnName": "StringArray",
+        "RowName": "2",
+        "CellValue": "abc,test"
+      },
+      {
+        "SheetName": "Weight",
+        "ColumnNumber": 2,
+        "RowNumber": 2,
+        "ColumnName": "StringList",
+        "RowName": "2",
+        "CellValue": "abc, test"
+      },
+      {
+        "SheetName": "Weight",
+        "ColumnNumber": 3,
+        "RowNumber": 2,
+        "ColumnName": "DoubleList",
+        "RowName": "2",
+        "CellValue": "1.1,3.5"
+      },
+      {
+        "SheetName": "Weight",
+        "ColumnNumber": 4,
+        "RowNumber": 2,
+        "ColumnName": "DoubleArray",
+        "RowName": "2",
+        "CellValue": "1.1, 3.5"
+      },
+      {
+        "SheetName": "Weight",
+        "ColumnNumber": 5,
+        "RowNumber": 2,
+        "ColumnName": "DoubleArraySemicolon",
+        "RowName": "2",
+        "CellValue": "1.1;3.5"
+      }
+    ]
+  }
+}

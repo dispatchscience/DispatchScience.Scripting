@@ -1,0 +1,344 @@
+{
+    "OrderId": "CONTOSO54647",
+    "OrderReader_CONTOSO54647": {
+        "Payout": {
+            "Delivery": {},
+            "ExtraFees": {},
+            "FuelSurcharge": {},
+            "PayoutInfo": {
+                "PredefinedPayoutValue": 5.0,
+                "DriverCommissionCalculationType": 1,
+                "DeliveryCommissionCalculationType": 1,
+                "FuelSurchargeCommissionCalculationType": 0,
+                "ExtraFeesCommissionCalculationType": 1,
+                "DeliveryPredefinedPayoutValue": 5.0,
+                "FuelSurchargePredefinedPayoutValue": null,
+                "ExtraFeesPredefinedPayoutValue": null,
+                "DeliveryCommissionPercentage": null,
+                "FuelSurchargeCommissionPercentage": null,
+                "ExtraFeesCommissionPercentage": null,
+                "DeliveryFixedPayoutScheduleId": null,
+                "FuelSurchargeFixedPayoutScheduleId": null,
+                "ExtraFeesFixedPayoutScheduleId": null,
+                "IsSetManually": false,
+                "DriverPayouts": []
+            }
+        },
+        "PickupWorkflow": {
+            "Steps": [
+                {
+                    "Id": "8d957ad6-b046-4602-82ab-dac8b2fb3351",
+                    "TitlePrimary": "C.O.D.",
+                    "TitleSecondary": "C.R.",
+                    "CanSkip": true,
+                    "StepType": 1,
+                    "IsActive": false,
+                    "UserFieldId": null,
+                    "Tag": null
+                },
+                {
+                    "Id": "3ed4e3ed-c89e-4edd-923d-d40af7f0b5fd",
+                    "TitlePrimary": "ID Verification",
+                    "TitleSecondary": "Vérification d'identité",
+                    "CanSkip": true,
+                    "StepType": 0,
+                    "IsActive": false,
+                    "UserFieldId": null,
+                    "Tag": null
+                },
+                {
+                    "Id": "7524f879-88ed-4bef-8a4f-5c608a8690d7",
+                    "TitlePrimary": "Picture",
+                    "TitleSecondary": "Imagen",
+                    "CanSkip": false,
+                    "StepType": 2,
+                    "IsActive": true,
+                    "UserFieldId": null,
+                    "Tag": null
+                },
+                {
+                    "Id": "1e183e9b-a671-4903-814a-8ffea2fdbb92",
+                    "TitlePrimary": "Signature",
+                    "TitleSecondary": "Firma",
+                    "CanSkip": false,
+                    "StepType": 3,
+                    "IsActive": true,
+                    "UserFieldId": null,
+                    "Tag": null
+                },
+                {
+                    "Id": "eeb43b36-484b-4a3b-a0d2-c407c2f5c310",
+                    "TitlePrimary": "Additional Signature",
+                    "TitleSecondary": "Signature additionnelle",
+                    "CanSkip": false,
+                    "StepType": 11,
+                    "IsActive": true,
+                    "UserFieldId": null,
+                    "Tag": null
+                }
+            ],
+            "Id": "FE4B13D0-258E-4E60-889A-BA49D9728670"
+        },
+        "DeliveryWorkflow": {
+            "Steps": [
+                {
+                    "Id": "65b040cc-aa24-4582-b92b-107b0f504c9c",
+                    "TitlePrimary": "C.O.D.",
+                    "TitleSecondary": "C.R.",
+                    "CanSkip": true,
+                    "StepType": 1,
+                    "IsActive": false,
+                    "UserFieldId": null,
+                    "Tag": null
+                },
+                {
+                    "Id": "071d1146-084f-44bb-aff5-8bc99de13e17",
+                    "TitlePrimary": "Picture",
+                    "TitleSecondary": "Photo",
+                    "CanSkip": false,
+                    "StepType": 2,
+                    "IsActive": true,
+                    "UserFieldId": null,
+                    "Tag": null
+                },
+                {
+                    "Id": "09ddcce8-bc60-47e1-90ed-e6a7bdc70a1d",
+                    "TitlePrimary": "Signature",
+                    "TitleSecondary": "Signature",
+                    "CanSkip": false,
+                    "StepType": 3,
+                    "IsActive": true,
+                    "UserFieldId": null,
+                    "Tag": null
+                }
+            ],
+            "Id": "4adbfbe0-a3c5-4504-aa3b-d80b278080af"
+        },
+        "AddItemWorkflow": {
+            "Steps": [
+                {
+                    "Id": "31415703-753e-41a0-a140-269dd1070254",
+                    "TitlePrimary": "Picture",
+                    "TitleSecondary": "Photo",
+                    "CanSkip": false,
+                    "StepType": 2,
+                    "IsActive": true,
+                    "UserFieldId": null,
+                    "Tag": null
+                }
+            ],
+            "Id": "ca49695f-1d3d-4a6a-97c6-0ed372886cb2"
+        },
+        "OrderId": "CONTOSO54647",
+        "ServiceLevelTypeId": "RUSH",
+        "VehicleTypeId": "CAR",
+        "ReferenceNumber1": "Mobile",
+        "ReferenceNumber2": "",
+        "ReferenceNumber3": "123",
+        "Attributes": [
+            "Heavy"
+        ],
+        "IsReadyForInvoicing": false,
+        "IsReadyForSettlement": true,
+        "IsInvoiced": false,
+        "GenerateProofOfDeliveryOnDelivery": null,
+        "Distance": {
+            "Value": 0.0,
+            "Unit": {
+                "SIConversionFactor": 1.0,
+                "Symbol": "m"
+            }
+        },
+        "AccountId": "fastfurious",
+        "PickupNotes": "",
+        "DeliveryNotes": "",
+        "Notes": "1",
+        "InternalNotes": "",
+        "IsOnHold": false,
+        "HoldExceptionCodeId": null,
+        "Attachments": [],
+        "UserFields": [],
+        "AssignedDriver": null,
+        "PickupWindow": {
+            "From": "2024-09-19T10:31:00-04:00",
+            "To": "2024-09-19T12:31:00-04:00"
+        },
+        "DeliveryWindow": {
+            "From": "2024-09-19T10:31:00-04:00",
+            "To": "2024-09-19T12:31:00-04:00"
+        },
+        "PickupDuration": "00:00:00",
+        "DeliveryDuration": "00:00:00",
+        "CollectOnDelivery": null,
+        "CollectOnPickup": null,
+        "AllowPartialCollectOnDelivery": false,
+        "AllowPartialCollectOnPickup": false,
+        "PickupContact": {
+            "Id": null,
+            "Name": null,
+            "PhoneNumber": null,
+            "Email": null,
+            "Language": "en"
+        },
+        "DeliveryContact": {
+            "Id": null,
+            "Name": null,
+            "PhoneNumber": null,
+            "Email": null,
+            "Language": "en"
+        },
+        "PickupAddress": {
+            "AddressLine1": "7250 Rue Mile End",
+            "AddressLine2": "",
+            "Company": "",
+            "City": "Montréal",
+            "ZipPostalCode": "H2R",
+            "StateProvince": "QC",
+            "Location": {
+              "Latitude": 45.53158,
+              "Longitude": -73.62263,
+              "IsValid": true
+            }
+        },
+        "DeliveryAddress": {
+            "AddressLine1": "7250 Rue Mile End",
+            "AddressLine2": "",
+            "Company": "",
+            "City": "Montréal",
+            "ZipPostalCode": "H2R",
+            "StateProvince": "QC",
+            "Location": {
+              "Latitude": 45.53158,
+              "Longitude": -73.62263,
+              "IsValid": true
+            }
+        },
+        "ProofOfPickup": {
+            "HasSignature": false,
+            "SignedBy": null,
+            "SignatureUrl": null
+        },
+        "ProofOfDelivery": {
+            "HasSignature": false,
+            "SignedBy": null,
+            "SignatureUrl": null
+        },
+        "EventDates": {
+            "Created": "2024-09-19T10:31:53.4672811-04:00",
+            "Dispatched": null,
+            "Accepted": null,
+            "ArrivedAtPickup": null,
+            "PickedUp": null,
+            "ArrivedAtDelivery": null,
+            "Delivered": null,
+            "Cancelled": null
+        },
+        "TotalOrderPriceWithoutFuelSurcharge": -3.0,
+        "TotalFuelSurcharge": 0.0,
+        "TotalOrderPrice": 0.0,
+        "DeliveryCharges": [
+            {
+                "ChargeId": "aa3e3d25-f1da-40ed-9992-e69695e4e3cf",
+                "IsReattempt": false,
+                "Price": 0.0,
+                "FuelSurcharge": 0.0,
+                "TotalPrice": 0.0,
+                "PickupZone": null,
+                "DeliveryZone": null,
+                "IsPriceOverridden": false
+            }
+        ],
+        "ExtraFees": [
+            {
+                "ChargeId": "45bc98ac-392f-4683-83e9-ddec64aa54a9",
+                "ExtraFeeTypeId": "NumberOfPieces",
+                "Quantity": 1.0,
+                "UnitPrice": 1.0,
+                "Price": 1.0,
+                "FuelSurcharge": 0.0,
+                "TotalPrice": 1.0
+            },
+            {
+                "ChargeId": "01685cac-c1b8-4ae0-a506-80210dc7fbb5",
+                "ExtraFeeTypeId": "TotalWeight",
+                "Quantity": 0.476,
+                "UnitPrice": 1.0,
+                "Price": 1.0,
+                "FuelSurcharge": 0.0,
+                "TotalPrice": 1.0
+            },
+            {
+                "ChargeId": "a0e69a88-5f86-4f7a-be8b-9ea9bff9aa61",
+                "ExtraFeeTypeId": "Mileage",
+                "Quantity": 0.0,
+                "UnitPrice": 2.0,
+                "Price": 0.0,
+                "FuelSurcharge": 0.0,
+                "TotalPrice": 0.0
+            },
+            {
+                "ChargeId": "6f375217-d30a-4cdc-9cc3-c2ce957be8b6",
+                "ExtraFeeTypeId": "Test",
+                "Quantity": 1.0,
+                "UnitPrice": -5.0,
+                "Price": -5.0,
+                "FuelSurcharge": 0.0,
+                "TotalPrice": -5.0
+            }
+        ],
+        "TrackedItems": [],
+        "ExceptionCodes": [],
+        "OrderItems": [
+            {
+                "UserFields": [],
+                "ExceptionCodes": [],
+                "Id": "897f5ca3-4078-4b26-ac3f-b1fc521c8358",
+                "ParcelTypeId": "box",
+                "Description": null,
+                "Weight": {
+                    "Value": 0.216,
+                    "Unit": {
+                        "SIConversionFactor": 0.45359237,
+                        "Symbol": "lb"
+                    }
+                },
+                "Length": {
+                    "Value": 6.0,
+                    "Unit": {
+                        "SIConversionFactor": 0.0254,
+                        "Symbol": "in"
+                    }
+                },
+                "Width": {
+                    "Value": 6.0,
+                    "Unit": {
+                        "SIConversionFactor": 0.0254,
+                        "Symbol": "in"
+                    }
+                },
+                "Height": {
+                    "Value": 6.0,
+                    "Unit": {
+                        "SIConversionFactor": 0.0254,
+                        "Symbol": "in"
+                    }
+                },
+                "BarcodeTemplate": "CONTOSO54647"
+            }
+        ],
+        "PackageValidationOptions": null,
+        "Zones": [],
+        "HasSegmentsPendingCreation": true,
+        "Status": 0,
+        "FulfillmentType": 0,
+        "Type": 0,
+        "Source": 3,
+        "RouteId": "2_20240923T1200Z_unmapped"
+    },
+    "ScriptDataProvider": {
+        "GetEventNames": [
+            "OrderCreated",
+            "DriverNotesUpdated"
+        ]
+    }
+}

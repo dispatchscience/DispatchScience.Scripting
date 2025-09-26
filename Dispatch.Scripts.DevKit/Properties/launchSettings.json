@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Dispatch.Scripts.DevKit": {
+      "commandName": "Project",
+      "commandLineArgs": "AssignDriver CONTOSO54647.json",
+      "workingDirectory": "$(MSBuildProjectDirectory)"
+    }
+  }
+}
