@@ -38,11 +38,14 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.AutomaticHubCreatio
             logger?.LogInformation(JsonSerializer.Serialize(hubConfigForTheOrder));
 
             var drivers = new List<string>();
-            var activeHubs = await GetActiveHubs(data, logger, (hubConfigForTheOrder.Hub1, hubConfigForTheOrder.Driver1, hubConfigForTheOrder.ServiceLevel1, hubConfigForTheOrder.RoutePlanId1, hubConfigForTheOrder.RouteName1, true, hubConfigForTheOrder.Driver2, hubConfigForTheOrder.ServiceLevel2, hubConfigForTheOrder.RoutePlanId2, hubConfigForTheOrder.RouteName2),
-                                                         (hubConfigForTheOrder.Hub2, hubConfigForTheOrder.Driver3, hubConfigForTheOrder.ServiceLevel3, hubConfigForTheOrder.RoutePlanId3, hubConfigForTheOrder.RouteName3, false, null, null, null, null),
-                                                         (hubConfigForTheOrder.Hub3, hubConfigForTheOrder.Driver4, hubConfigForTheOrder.ServiceLevel4, hubConfigForTheOrder.RoutePlanId4, hubConfigForTheOrder.RouteName4, false, null, null, null, null),
-                                                         (hubConfigForTheOrder.Hub4, hubConfigForTheOrder.Driver5, hubConfigForTheOrder.ServiceLevel5, hubConfigForTheOrder.RoutePlanId5, hubConfigForTheOrder.RouteName5, false, null, null, null, null),
-                                                         (hubConfigForTheOrder.Hub5, hubConfigForTheOrder.Driver6, hubConfigForTheOrder.ServiceLevel6, hubConfigForTheOrder.RoutePlanId6, hubConfigForTheOrder.RouteName6, false, null, null, null, null));
+            var activeHubs = await GetActiveHubs(
+                data, 
+                logger, 
+                (hubConfigForTheOrder.Hub1, hubConfigForTheOrder.Driver1, hubConfigForTheOrder.ServiceLevel1, hubConfigForTheOrder.RoutePlanId1, hubConfigForTheOrder.RouteName1, true, hubConfigForTheOrder.Driver2, hubConfigForTheOrder.ServiceLevel2, hubConfigForTheOrder.RoutePlanId2, hubConfigForTheOrder.RouteName2),
+                (hubConfigForTheOrder.Hub2, hubConfigForTheOrder.Driver3, hubConfigForTheOrder.ServiceLevel3, hubConfigForTheOrder.RoutePlanId3, hubConfigForTheOrder.RouteName3, false, null, null, null, null),
+                (hubConfigForTheOrder.Hub3, hubConfigForTheOrder.Driver4, hubConfigForTheOrder.ServiceLevel4, hubConfigForTheOrder.RoutePlanId4, hubConfigForTheOrder.RouteName4, false, null, null, null, null),
+                (hubConfigForTheOrder.Hub4, hubConfigForTheOrder.Driver5, hubConfigForTheOrder.ServiceLevel5, hubConfigForTheOrder.RoutePlanId5, hubConfigForTheOrder.RouteName5, false, null, null, null, null),
+                (hubConfigForTheOrder.Hub5, hubConfigForTheOrder.Driver6, hubConfigForTheOrder.ServiceLevel6, hubConfigForTheOrder.RoutePlanId6, hubConfigForTheOrder.RouteName6, false, null, null, null, null));
 
             logger.LogInformation($"Configuration contains {activeHubs.Count()} hub(s).");
 
@@ -75,8 +78,10 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.AutomaticHubCreatio
             }
         }
 
-        private async static Task<HubInfo[]> GetActiveHubs(IScriptDataProvider data, ILogger logger, params (string hubName, string driver1, string serviceLevel1, string routePlanId1, string routeName1,
-                                                                                                             bool includeSegment2Info, string driver2, string serviceLevel2, string routePlanId2, string routeName2)[] hubsAndSegmentsInfo)
+        private async static Task<HubInfo[]> GetActiveHubs(
+            IScriptDataProvider data, 
+            ILogger logger, 
+            params (string hubName, string driver1, string serviceLevel1, string routePlanId1, string routeName1, bool includeSegment2Info, string driver2, string serviceLevel2, string routePlanId2, string routeName2)[] hubsAndSegmentsInfo)
         {
             var activeHubs = new List<HubInfo>();
             foreach (var hub in hubsAndSegmentsInfo)
@@ -91,12 +96,18 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.AutomaticHubCreatio
                 if (hub.includeSegment2Info)
                 {
                     var driverId2 = await GetDriverId(data, hub.driver2, logger);
-                    hubInfo.SegmentOverrideInfos = new SegmentOverrideInfo[] { new SegmentOverrideInfo { DriverId = driverId1, ServiceLevelTypeId = hub.serviceLevel1, RoutePlanId = ParseInt(hub.routePlanId1), RouteName = hub.routeName1 },
-                                                                        new SegmentOverrideInfo { DriverId = driverId2, ServiceLevelTypeId = hub.serviceLevel2, RoutePlanId = ParseInt(hub.routePlanId2), RouteName = hub.routeName2 } };
+                    hubInfo.SegmentOverrideInfos = new SegmentOverrideInfo[]
+                    {
+                        new SegmentOverrideInfo { DriverId = driverId1, ServiceLevelTypeId = hub.serviceLevel1, RoutePlanId = ParseInt(hub.routePlanId1), RouteName = hub.routeName1 },
+                        new SegmentOverrideInfo { DriverId = driverId2, ServiceLevelTypeId = hub.serviceLevel2, RoutePlanId = ParseInt(hub.routePlanId2), RouteName = hub.routeName2 }
+                    };
                 }
                 else
                 {
-                    hubInfo.SegmentOverrideInfos = new SegmentOverrideInfo[] { new SegmentOverrideInfo { DriverId = driverId1, ServiceLevelTypeId = hub.serviceLevel1, RoutePlanId = ParseInt(hub.routePlanId1), RouteName = hub.routeName1 } };
+                    hubInfo.SegmentOverrideInfos = new SegmentOverrideInfo[]
+                    {
+                        new SegmentOverrideInfo { DriverId = driverId1, ServiceLevelTypeId = hub.serviceLevel1, RoutePlanId = ParseInt(hub.routePlanId1), RouteName = hub.routeName1 }
+                    };
                 }
                 activeHubs.Add(hubInfo);
             }
@@ -126,8 +137,6 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.AutomaticHubCreatio
             }
             return hub;
         }
-
-
 
         private static async Task<string> GetDriverId(IScriptDataProvider data, string driverNumer, ILogger logger)
         {

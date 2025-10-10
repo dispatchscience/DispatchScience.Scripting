@@ -41,8 +41,7 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.ComplexOffHourOrder
                     string.IsNullOrWhiteSpace(serviceTypes) ||
                     string.IsNullOrWhiteSpace(flatCharge) ||
                     string.IsNullOrWhiteSpace(percentOfBase) ||
-                        string.IsNullOrWhiteSpace(totalChargeMinimum))
-
+                    string.IsNullOrWhiteSpace(totalChargeMinimum))
                 {
                     logger.LogInformation($"Rule #{i} definition is incomplete.");
                 }
@@ -52,11 +51,11 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.ComplexOffHourOrder
                 logger.LogInformation($"Rule #{i} (IsOneOfTheDay) : {IsOneOfTheDay(order.DeliveryWindow.To, dayOfWeek)}");
                
                 if (IsEqual(order.ReferenceNumber1, orderCode) &&
-                        IsEqual(orderIsOnAHoliday.ToString(), holiday) &&
-                        (IsEqual("ANY", vehicle) || IsEqual(order.VehicleTypeId, vehicle)) &&
-                        (IsEqual("ANY", serviceTypes) || IsEqual(order.ServiceLevelTypeId, serviceTypes)) &&
-                        IsTimeBetween(order.DeliveryWindow.To, startTime, endTime) &&
-                        IsOneOfTheDay(order.DeliveryWindow.To, dayOfWeek))
+                    IsEqual(orderIsOnAHoliday.ToString(), holiday) &&
+                    (IsEqual("ANY", vehicle) || IsEqual(order.VehicleTypeId, vehicle)) &&
+                    (IsEqual("ANY", serviceTypes) || IsEqual(order.ServiceLevelTypeId, serviceTypes)) &&
+                    IsTimeBetween(order.DeliveryWindow.To, startTime, endTime) &&
+                    IsOneOfTheDay(order.DeliveryWindow.To, dayOfWeek))
                 {
                     logger.LogInformation($"Rule #{i} matched!");
 

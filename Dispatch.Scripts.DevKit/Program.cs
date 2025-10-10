@@ -49,7 +49,8 @@ var scriptData = arguments.Length == 4
     : Environment.GetCommandLineArgs()[2];
 
 var iterations = Enumerable.Repeat(true, 1);
-var shouldLog = iterations.Count() == 1;
+var isBenchmarking = iterations.Count() > 1;
+var shouldLog = !isBenchmarking;
 var logger = shouldLog
     ? loggerFactory.CreateLogger<Program>()
     : (ILogger)NullLogger.Instance;
@@ -60,36 +61,38 @@ if (forceRerunMapSheet)
     Console.WriteLine("Using 'forceRerunMapSheet', this will impact performance comparison since it doesn't use the 'cached' typed objects and reconstructs them using Reflection.");
 }
 
+using var fileStream = File.OpenRead($"{folder}\\{scriptData}");
+var json = await JsonSerializer.DeserializeAsync<JsonNode>(fileStream);
+var scriptDebugWrapper = new ScriptDebugWrapper(json!, logger);
+var scriptDataProvider = new MockScriptDataProvider(scriptDebugWrapper, forceRerunMapSheet);
+
 if (script is IOrderUpdateScript orderUpdateScript)
 {
-    using var fileStream = File.OpenRead($"{folder}\\{scriptData}");
-    var json = await JsonSerializer.DeserializeAsync<JsonNode>(fileStream);
-    var scriptDebugWrapper = new ScriptDebugWrapper(json!, logger);
-    var scriptDataProvider = new MockScriptDataProvider(scriptDebugWrapper, forceRerunMapSheet);
+    var orderUpdater = new MockOrderUpdater(scriptDebugWrapper, NullLogger.Instance);
 
     // Run once for warmup
-    await new OrderUpdateScriptContainer(orderUpdateScript).OnOrderUpdate(new MockOrderUpdater(scriptDebugWrapper, logger), scriptDataProvider, NullLogger.Instance);
+    await new OrderUpdateScriptContainer(orderUpdateScript).OnOrderUpdate(orderUpdater, scriptDataProvider, NullLogger.Instance);
+
+    orderUpdater.UpdateLogger(logger);
 
     var stopwatch = Stopwatch.StartNew();
     await Parallel.ForEachAsync(iterations, async (_, _) => await new OrderUpdateScriptContainer(orderUpdateScript)
-        .OnOrderUpdate(new MockOrderUpdater(scriptDebugWrapper, logger), scriptDataProvider, logger));
+        .OnOrderUpdate(orderUpdater, scriptDataProvider, logger));
+    stopwatch.Stop();
     Console.WriteLine($"[{orderUpdateScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds/iterations.Count()}ms)");
 
     if (baseline is not null && baseline is IOrderUpdateScript baselineScript)
     {
         stopwatch.Restart();
         await Parallel.ForEachAsync(iterations, async (_, _) => await new OrderUpdateScriptContainer(baselineScript)
-            .OnOrderUpdate(new MockOrderUpdater(scriptDebugWrapper, logger), scriptDataProvider, logger));
+            .OnOrderUpdate(orderUpdater, scriptDataProvider, logger));
+        stopwatch.Stop();
         Console.WriteLine($"[{baselineScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds/iterations.Count()}ms)");
     }
 }
 
 if (script is IExtraFeeScript extraFeeScript)
 {
-    using var fileStream = File.OpenRead($"{folder}\\{scriptData}");
-    var json = await JsonSerializer.DeserializeAsync<JsonNode>(fileStream);
-    var scriptDebugWrapper = new ScriptDebugWrapper(json!, logger);
-    var scriptDataProvider = new MockScriptDataProvider(scriptDebugWrapper, forceRerunMapSheet);
     var orderScriptInfo = scriptDebugWrapper.GetOrderScriptInfo()!;
 
     // Run once for warmup
@@ -110,7 +113,8 @@ if (script is IExtraFeeScript extraFeeScript)
             logger.LogInformation($"Result is null");
         }
     });
-    Console.WriteLine($"[{extraFeeScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms");
+    stopwatch.Stop();
+    Console.WriteLine($"[{extraFeeScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
 
     if (baseline is not null && baseline is IExtraFeeScript baselineScript)
     {
@@ -129,7 +133,41 @@ if (script is IExtraFeeScript extraFeeScript)
                 logger.LogInformation($"Result is null");
             }
         });
-        Console.WriteLine($"[{baselineScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms");
+        stopwatch.Stop();
+        Console.WriteLine($"[{baselineScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
+    }
+}
+
+if (script is IOrderRuleScript orderRuleScript)
+{
+    var orderReader = new MockOrderUpdater(scriptDebugWrapper, NullLogger.Instance).OrderReader;
+
+    // Run once for warmup
+    await new OrderRuleScriptContainer(orderRuleScript).EvaluateRule(orderReader, scriptDataProvider, NullLogger.Instance);
+
+    var stopwatch = Stopwatch.StartNew();
+    await Parallel.ForEachAsync(iterations, async (_, _) =>
+    {
+        var result = await new OrderRuleScriptContainer(orderRuleScript)
+            .EvaluateRule(orderReader, scriptDataProvider, logger);
+
+        logger.LogInformation($"Result is {result}");
+    });
+    stopwatch.Stop();
+    Console.WriteLine($"[{orderRuleScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
+
+    if (baseline is not null && baseline is IOrderRuleScript baselineScript)
+    {
+        stopwatch.Restart();
+        await Parallel.ForEachAsync(iterations, async (_, _) =>
+        {
+            var result = await new OrderRuleScriptContainer(baselineScript)
+                .EvaluateRule(orderReader, scriptDataProvider, logger);
+
+            logger.LogInformation($"Result is {result}");
+        });
+        stopwatch.Stop();
+        Console.WriteLine($"[{baselineScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
     }
 }
 

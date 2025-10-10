@@ -1,5 +1,4 @@
-﻿using Dispatch.Measures;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.AddExtraFeeForLongDistance
 {

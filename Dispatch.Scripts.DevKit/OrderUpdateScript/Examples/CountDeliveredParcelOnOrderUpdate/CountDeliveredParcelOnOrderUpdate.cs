@@ -32,20 +32,22 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.CountDeliveredParce
                 return;
             }
 
-            var deliveredBarcodes = order.TrackedItems.Where(x => x.Status == OrderItemTrackingStatus.Scanned
-                                                                        && x.TrackingType == OrderItemTrackingType.Delivered
-                                                                        && order.OrderItems.Any(y => string.Equals(y.BarcodeTemplate?.Trim(), x.BarcodeTemplate?.Trim(), StringComparison.CurrentCultureIgnoreCase)))
-                                                        .GroupBy(x => x.BarcodeTemplate?.Trim())
-                                                        .Select(x => x.Key)
-                                                        .Where(x => Regex.IsMatch(x, barcodeValidation))
-                                                        .ToList();
+            var deliveredBarcodes = order.TrackedItems
+                .Where(x => x.Status == OrderItemTrackingStatus.Scanned
+                         && x.TrackingType == OrderItemTrackingType.Delivered
+                         && order.OrderItems.Any(y => string.Equals(y.BarcodeTemplate?.Trim(), x.BarcodeTemplate?.Trim(), StringComparison.CurrentCultureIgnoreCase)))
+                .GroupBy(x => x.BarcodeTemplate?.Trim())
+                .Select(x => x.Key)
+                .Where(x => Regex.IsMatch(x, barcodeValidation))
+                .ToList();
 
-            var manualScans = order.OrderItems.Where(x => x.UserFields.Any(y => string.Equals(y.UserFieldId, "DDUNoDelivery", StringComparison.InvariantCultureIgnoreCase) && 
-                                                                                string.Equals(y.UserFieldId, true.ToString(), StringComparison.InvariantCultureIgnoreCase)))
-                                                        .GroupBy(x => x.BarcodeTemplate?.Trim())
-                                                        .Select(x => x.Key)
-                                                        .Where(x => Regex.IsMatch(x, barcodeValidation))
-                                                        .ToList();
+            var manualScans = order.OrderItems
+                .Where(x => x.UserFields.Any(y => string.Equals(y.UserFieldId, "DDUNoDelivery", StringComparison.InvariantCultureIgnoreCase) 
+                                               && string.Equals(y.UserFieldId, true.ToString(), StringComparison.InvariantCultureIgnoreCase)))
+                .GroupBy(x => x.BarcodeTemplate?.Trim())
+                .Select(x => x.Key)
+                .Where(x => Regex.IsMatch(x, barcodeValidation))
+                .ToList();
 
             foreach (var manualScan in manualScans)
             {
@@ -63,7 +65,7 @@ namespace Dispatch.Scripts.DevKit.OrderUpdateScript.Examples.CountDeliveredParce
             }
 
             if (deliveredParcelCount == null)
-            {                
+            {
                 await order.AddExtraFee("DDUItem", deliveredBarcodes.Count, price);
             }
             else

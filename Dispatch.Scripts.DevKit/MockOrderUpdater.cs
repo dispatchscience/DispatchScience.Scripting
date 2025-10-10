@@ -1,19 +1,15 @@
 ﻿using Dispatch.Measures;
 using Dispatch.Scripts.Abstractions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Dispatch.Scripts.DevKit
 {
     internal class MockOrderUpdater : IOrderUpdater
     {
         private readonly ScriptDebugWrapper _scriptDebugWrapper;
-        private readonly ILogger _logger;
         private readonly MockOrderReader _orderReader;
+        private ILogger _logger;
 
         public MockOrderUpdater(ScriptDebugWrapper scriptDebugWrapper, ILogger logger, string? orderId = null)
         {
@@ -23,6 +19,13 @@ namespace Dispatch.Scripts.DevKit
             orderId ??= _scriptDebugWrapper.GetProperty<string>(ScriptDebugWrapper.OrderId);
             _orderReader = _scriptDebugWrapper.GetOrderReader<MockOrderReader>(orderId)!;
         }
+
+        public void UpdateLogger(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public MockOrderReader OrderReader => _orderReader;
 
         public string OrderId => _orderReader.OrderId;
         public string AccountId => _orderReader.AccountId;
