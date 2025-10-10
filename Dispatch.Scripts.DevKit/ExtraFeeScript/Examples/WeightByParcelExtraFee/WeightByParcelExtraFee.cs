@@ -3,7 +3,7 @@
 namespace Dispatch.Scripts.DevKit.ExtraFeeScript.Examples.WeightByParcelExtraFee
 {
     public class WeightByParcelExtraFee : IExtraFeeScript
-    {        
+    {
         public async Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IScriptDataProvider data, ILogger logger)
         {
             var priceSheet = await data.GetSheet();

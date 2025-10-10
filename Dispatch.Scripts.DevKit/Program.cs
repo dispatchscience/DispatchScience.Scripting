@@ -4,13 +4,9 @@ using Dispatch.Scripts.Abstractions;
 using Dispatch.Scripts.DevKit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
     .SetMinimumLevel(LogLevel.Information)
@@ -39,7 +35,12 @@ object? GetScript(string scriptName)
 }
 
 var script = GetScript(arguments[1]);
-var folder = script.GetType().Namespace.Replace("Dispatch.Scripts.DevKit.", "").Replace(".", "\\");
+if (script is null)
+{
+    throw new Exception($"Couldn't create instance of type '{arguments[1]}'");
+}
+
+var folder = script.GetType().Namespace!.Replace("Dispatch.Scripts.DevKit.", "").Replace(".", "\\");
 var baseline = arguments.Length == 4
     ? GetScript(arguments[2])
     : null;
@@ -47,13 +48,13 @@ var scriptData = arguments.Length == 4
     ? Environment.GetCommandLineArgs()[3]
     : Environment.GetCommandLineArgs()[2];
 
-var iterations = Enumerable.Repeat(true, 100);
+var iterations = Enumerable.Repeat(true, 1);
 var shouldLog = iterations.Count() == 1;
 var logger = shouldLog
     ? loggerFactory.CreateLogger<Program>()
     : (ILogger)NullLogger.Instance;
 
-var forceRerunMapSheet = false;
+var forceRerunMapSheet = true;
 if (forceRerunMapSheet)
 {
     Console.WriteLine("Using 'forceRerunMapSheet', this will impact performance comparison since it doesn't use the 'cached' typed objects and reconstructs them using Reflection.");
