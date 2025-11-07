@@ -6,6 +6,8 @@ namespace Dispatch.Scripts
 {
     public class OrderScriptInfo
     {
+        public OrderFulfillmentType FulfillmentType { get; set; }
+
         public Length Distance { get; set; }
 
         public OrderType OrderType { get; set; }

@@ -34,13 +34,25 @@ object? GetScript(string scriptName)
     return Activator.CreateInstance(scriptType);
 }
 
+string GetScriptPathFromClass(Type classType)
+{
+    var path = classType.Namespace!.Replace("Dispatch.Scripts.DevKit.", "").Replace(".", "\\");
+
+    if (!Path.Exists(path))
+    {
+        throw new Exception($"Could not find path for debug data (Path: {path}). Make sure the namespace is the same as the directory.");
+    }
+
+    return path;
+}
+
 var script = GetScript(arguments[1]);
 if (script is null)
 {
     throw new Exception($"Couldn't create instance of type '{arguments[1]}'");
 }
 
-var folder = script.GetType().Namespace!.Replace("Dispatch.Scripts.DevKit.", "").Replace(".", "\\");
+var path = GetScriptPathFromClass(script.GetType());
 var baseline = arguments.Length == 4
     ? GetScript(arguments[2])
     : null;
@@ -61,7 +73,7 @@ if (forceRerunMapSheet)
     Console.WriteLine("Using 'forceRerunMapSheet', this will impact performance comparison since it doesn't use the 'cached' typed objects and reconstructs them using Reflection.");
 }
 
-using var fileStream = File.OpenRead($"{folder}\\{scriptData}");
+using var fileStream = File.OpenRead($"{path}\\{scriptData}");
 var json = await JsonSerializer.DeserializeAsync<JsonNode>(fileStream);
 var scriptDebugWrapper = new ScriptDebugWrapper(json!, logger);
 var scriptDataProvider = new MockScriptDataProvider(scriptDebugWrapper, forceRerunMapSheet);
@@ -70,8 +82,11 @@ if (script is IOrderUpdateScript orderUpdateScript)
 {
     var orderUpdater = new MockOrderUpdater(scriptDebugWrapper, NullLogger.Instance);
 
-    // Run once for warmup
-    await new OrderUpdateScriptContainer(orderUpdateScript).OnOrderUpdate(orderUpdater, scriptDataProvider, NullLogger.Instance);
+    if (isBenchmarking)
+    {
+        // Run once for warmup
+        await new OrderUpdateScriptContainer(orderUpdateScript).OnOrderUpdate(orderUpdater, scriptDataProvider, NullLogger.Instance);
+    }
 
     orderUpdater.UpdateLogger(logger);
 
@@ -95,8 +110,11 @@ if (script is IExtraFeeScript extraFeeScript)
 {
     var orderScriptInfo = scriptDebugWrapper.GetOrderScriptInfo()!;
 
-    // Run once for warmup
-    await new ExtraFeeScriptContainer(extraFeeScript).GetExtraFeePriceInfo(orderScriptInfo, scriptDataProvider, NullLogger.Instance);
+    if (isBenchmarking)
+    {
+        // Run once for warmup
+        await new ExtraFeeScriptContainer(extraFeeScript).GetExtraFeePriceInfo(orderScriptInfo, scriptDataProvider, NullLogger.Instance);
+    }
 
     var stopwatch = Stopwatch.StartNew();
     await Parallel.ForEachAsync(iterations, async (_, _) =>
@@ -142,8 +160,11 @@ if (script is IOrderRuleScript orderRuleScript)
 {
     var orderReader = new MockOrderUpdater(scriptDebugWrapper, NullLogger.Instance).OrderReader;
 
-    // Run once for warmup
-    await new OrderRuleScriptContainer(orderRuleScript).EvaluateRule(orderReader, scriptDataProvider, NullLogger.Instance);
+    if (isBenchmarking)
+    {
+        // Run once for warmup
+        await new OrderRuleScriptContainer(orderRuleScript).EvaluateRule(orderReader, scriptDataProvider, NullLogger.Instance);
+    }
 
     var stopwatch = Stopwatch.StartNew();
     await Parallel.ForEachAsync(iterations, async (_, _) =>
