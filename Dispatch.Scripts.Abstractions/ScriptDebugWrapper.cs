@@ -119,6 +119,30 @@ namespace Dispatch.Scripts.Abstractions
             }
         }
 
+        public bool HasScriptData(string methodName, params object[] args)
+        {
+            if (_jsonData is null)
+            {
+                throw new Exception("Cannot read data in this mode.");
+            }
+
+            var data = _jsonData[ScriptDataProvider];
+            if (data is null)
+            {
+                return default;
+            }
+
+            var keyParts = new List<string> { methodName };
+            if (args is not null)
+            {
+                keyParts.AddRange(args.Select(x => x?.ToString()).Cast<string>().ToArray());
+            }
+            var key = string.Join("|", keyParts);
+
+            var value = data[key];
+            return value is not null;
+        }
+
         public T? GetScriptDataCall<T>(string methodName, params object[] args)
         {
             if (_jsonData is null)

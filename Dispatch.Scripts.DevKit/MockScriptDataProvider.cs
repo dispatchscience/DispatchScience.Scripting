@@ -69,7 +69,10 @@ namespace Dispatch.Scripts.DevKit
 
         public async Task<T[]> GetSheet<T>(string? sheetName = null, Action<(T DataObject, IGrouping<int?, ScriptCell> RowData, (string Name, string RawName, int Number)[] AvailableColumns)>? additionalInitializer = null) where T : IScriptData, new()
         {
-            if (!_forceRerunMapSheet)
+            // If the debugData only contains the "compiled" version, we can't rerun it because we don't have the raw data
+            var canRerunMapSheet = _scriptDebugWrapper.HasScriptData(nameof(GetSheet), sheetName);
+
+            if (!_forceRerunMapSheet || !canRerunMapSheet)
             {
                 var nativeData = _scriptDebugWrapper.GetScriptDataCall<T[]>(nameof(GetSheet), typeof(T).Name, sheetName);
                 if (nativeData is not null)
