@@ -8,6 +8,10 @@ namespace Dispatch.Scripts
     {
         public OrderFulfillmentType FulfillmentType { get; set; }
 
+        public OrderSource Source { get; set; }
+
+        public OrderStatus Status { get; set; }
+
         public Length Distance { get; set; }
 
         public OrderType OrderType { get; set; }
