@@ -367,6 +367,12 @@ namespace Dispatch.Scripts.DevKit
             _logger.LogInformation($"[{OrderId}] {nameof(UpdatePackageValidationOptions)}({packageValidationOptions}) called");
         }
 
+        public async Task UpdateServiceLevel(string serviceLevelTypeId, bool updateDeliveryCharge = true, bool updateScriptedExtraFees = true)
+        {
+            await Task.CompletedTask;
+            _logger.LogInformation($"[{OrderId}] {nameof(UpdateServiceLevel)}({serviceLevelTypeId}, {updateDeliveryCharge}, {updateScriptedExtraFees}) called");
+        }
+
         public async Task UpdatePickupDuration(TimeSpan newDuration, bool preventRelatedSegmentUpdate = false)
         {
             await Task.CompletedTask;

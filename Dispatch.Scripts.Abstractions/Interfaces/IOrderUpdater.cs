@@ -338,6 +338,11 @@ namespace Dispatch.Scripts
         Task UpdatePackageValidationOptions(PackageValidationOptions packageValidationOptions);
 
         /// <summary>
+        /// Update the service level on the order. Time windows will automatically be updated.
+        /// </summary>
+        Task UpdateServiceLevel(string serviceLevelTypeId, bool updateDeliveryCharge = true, bool updateScriptedExtraFees = true);
+
+        /// <summary>
         /// Recalculate different order charges.
         /// </summary>
         [Obsolete("Use RecalculateCharges(Action<PricingUpdateOptions>? configureOptions = null) instead")]
