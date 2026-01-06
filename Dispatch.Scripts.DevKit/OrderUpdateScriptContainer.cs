@@ -4,13 +4,13 @@ namespace Dispatch.Scripts.DevKit
 {
     internal class OrderUpdateScriptContainer : IOrderUpdateScript
     {
-        private readonly IOrderUpdateScript _script;
+        private readonly Type _scriptType;
 
-        public OrderUpdateScriptContainer(IOrderUpdateScript script)
+        public OrderUpdateScriptContainer(Type scriptType)
         {
-            _script = script;
+            _scriptType = scriptType;
         }
 
-        public Task OnOrderUpdate(IOrderUpdater order, IScriptDataProvider data, ILogger logger) => _script.OnOrderUpdate(order, data, logger);
+        public Task OnOrderUpdate(IOrderUpdater order, IScriptDataProvider data, ILogger logger) => ((IOrderUpdateScript)Activator.CreateInstance(_scriptType)!).OnOrderUpdate(order, data, logger);
     }
 }

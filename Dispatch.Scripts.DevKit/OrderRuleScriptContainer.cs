@@ -4,13 +4,13 @@ namespace Dispatch.Scripts.DevKit
 {
     internal class OrderRuleScriptContainer : IOrderRuleScript
     {
-        private readonly IOrderRuleScript _script;
+        private readonly Type _scriptType;
 
-        public OrderRuleScriptContainer(IOrderRuleScript script)
+        public OrderRuleScriptContainer(Type scriptType)
         {
-            _script = script;
+            _scriptType = scriptType;
         }
 
-        public Task<bool> EvaluateRule(IOrderReader order, IScriptDataProvider data, ILogger logger) => _script.EvaluateRule(order, data, logger);
+        public Task<bool> EvaluateRule(IOrderReader order, IScriptDataProvider data, ILogger logger) => ((IOrderRuleScript)Activator.CreateInstance(_scriptType)!).EvaluateRule(order, data, logger);
     }
 }

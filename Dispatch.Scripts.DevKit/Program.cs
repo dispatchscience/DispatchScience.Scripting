@@ -18,11 +18,11 @@ if (arguments.Length < 3)
     throw new Exception("Invalid number of arguments, we expect 2 arguments or more, first one being the class name of the script to execute, optionally the second one can be the class name of the baseline script and the last one being the json data file");
 }
 
-object? GetScript(string scriptName)
+(Type? ScriptType, object? Script) GetScript(string scriptName)
 {
     if (scriptName is null)
     {
-        return null;
+        return (null, null);
     }
 
     var scriptType = typeof(Program).Assembly.GetExportedTypes().FirstOrDefault(x => x.Name == scriptName);
@@ -31,7 +31,7 @@ object? GetScript(string scriptName)
         throw new Exception($"Couldn't find type '{scriptName}'");
     }
 
-    return Activator.CreateInstance(scriptType);
+    return (scriptType, Activator.CreateInstance(scriptType));
 }
 
 string GetScriptPathFromClass(Type classType)
@@ -47,15 +47,15 @@ string GetScriptPathFromClass(Type classType)
 }
 
 var script = GetScript(arguments[1]);
-if (script is null)
+if (script.Script is null)
 {
     throw new Exception($"Couldn't create instance of type '{arguments[1]}'");
 }
 
-var path = GetScriptPathFromClass(script.GetType());
+var path = GetScriptPathFromClass(script.Script.GetType());
 var baseline = arguments.Length == 4
     ? GetScript(arguments[2])
-    : null;
+    : (null, null);
 var scriptData = arguments.Length == 4
     ? Environment.GetCommandLineArgs()[3]
     : Environment.GetCommandLineArgs()[2];
@@ -78,48 +78,48 @@ var json = await JsonSerializer.DeserializeAsync<JsonNode>(fileStream);
 var scriptDebugWrapper = new ScriptDebugWrapper(json!, logger);
 var scriptDataProvider = new MockScriptDataProvider(scriptDebugWrapper, forceRerunMapSheet);
 
-if (script is IOrderUpdateScript orderUpdateScript)
+if (script.Script is IOrderUpdateScript)
 {
     var orderUpdater = new MockOrderUpdater(scriptDebugWrapper, NullLogger.Instance);
 
     if (isBenchmarking)
     {
         // Run once for warmup
-        await new OrderUpdateScriptContainer(orderUpdateScript).OnOrderUpdate(orderUpdater, scriptDataProvider, NullLogger.Instance);
+        await new OrderUpdateScriptContainer(script.ScriptType!).OnOrderUpdate(orderUpdater, scriptDataProvider, NullLogger.Instance);
     }
 
     orderUpdater.UpdateLogger(logger);
 
     var stopwatch = Stopwatch.StartNew();
-    await Parallel.ForEachAsync(iterations, async (_, _) => await new OrderUpdateScriptContainer(orderUpdateScript)
+    await Parallel.ForEachAsync(iterations, async (_, _) => await new OrderUpdateScriptContainer(script.ScriptType!)
         .OnOrderUpdate(orderUpdater, scriptDataProvider, logger));
     stopwatch.Stop();
-    Console.WriteLine($"[{orderUpdateScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds/iterations.Count()}ms)");
+    Console.WriteLine($"[{script.ScriptType!.Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds/iterations.Count()}ms)");
 
-    if (baseline is not null && baseline is IOrderUpdateScript baselineScript)
+    if (baseline.Script is not null && baseline.Script is IOrderUpdateScript)
     {
         stopwatch.Restart();
-        await Parallel.ForEachAsync(iterations, async (_, _) => await new OrderUpdateScriptContainer(baselineScript)
+        await Parallel.ForEachAsync(iterations, async (_, _) => await new OrderUpdateScriptContainer(baseline.ScriptType!)
             .OnOrderUpdate(orderUpdater, scriptDataProvider, logger));
         stopwatch.Stop();
-        Console.WriteLine($"[{baselineScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds/iterations.Count()}ms)");
+        Console.WriteLine($"[{baseline.ScriptType!.Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds/iterations.Count()}ms)");
     }
 }
 
-if (script is IExtraFeeScript extraFeeScript)
+if (script.Script is IExtraFeeScript)
 {
     var orderScriptInfo = scriptDebugWrapper.GetOrderScriptInfo()!;
 
     if (isBenchmarking)
     {
         // Run once for warmup
-        await new ExtraFeeScriptContainer(extraFeeScript).GetExtraFeePriceInfo(orderScriptInfo, scriptDataProvider, NullLogger.Instance);
+        await new ExtraFeeScriptContainer(script.ScriptType!).GetExtraFeePriceInfo(orderScriptInfo, scriptDataProvider, NullLogger.Instance);
     }
 
     var stopwatch = Stopwatch.StartNew();
     await Parallel.ForEachAsync(iterations, async (_, _) =>
     {
-        var result = await new ExtraFeeScriptContainer(extraFeeScript)
+        var result = await new ExtraFeeScriptContainer(script.ScriptType!)
             .GetExtraFeePriceInfo(orderScriptInfo, scriptDataProvider, logger);
 
         if (result is not null)
@@ -132,14 +132,14 @@ if (script is IExtraFeeScript extraFeeScript)
         }
     });
     stopwatch.Stop();
-    Console.WriteLine($"[{extraFeeScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
+    Console.WriteLine($"[{script.ScriptType!.Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
 
-    if (baseline is not null && baseline is IExtraFeeScript baselineScript)
+    if (baseline.Script is not null && baseline.Script is IExtraFeeScript)
     {
         stopwatch.Restart();
         await Parallel.ForEachAsync(iterations, async (_, _) =>
         {
-            var result = await new ExtraFeeScriptContainer(baselineScript)
+            var result = await new ExtraFeeScriptContainer(baseline.ScriptType!)
                 .GetExtraFeePriceInfo(orderScriptInfo, scriptDataProvider, logger);
 
             if (result is not null)
@@ -152,43 +152,43 @@ if (script is IExtraFeeScript extraFeeScript)
             }
         });
         stopwatch.Stop();
-        Console.WriteLine($"[{baselineScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
+        Console.WriteLine($"[{baseline.ScriptType!.Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
     }
 }
 
-if (script is IOrderRuleScript orderRuleScript)
+if (script.Script is IOrderRuleScript)
 {
     var orderReader = new MockOrderUpdater(scriptDebugWrapper, NullLogger.Instance).OrderReader;
 
     if (isBenchmarking)
     {
         // Run once for warmup
-        await new OrderRuleScriptContainer(orderRuleScript).EvaluateRule(orderReader, scriptDataProvider, NullLogger.Instance);
+        await new OrderRuleScriptContainer(script.ScriptType!).EvaluateRule(orderReader, scriptDataProvider, NullLogger.Instance);
     }
 
     var stopwatch = Stopwatch.StartNew();
     await Parallel.ForEachAsync(iterations, async (_, _) =>
     {
-        var result = await new OrderRuleScriptContainer(orderRuleScript)
+        var result = await new OrderRuleScriptContainer(script.ScriptType!)
             .EvaluateRule(orderReader, scriptDataProvider, logger);
 
         logger.LogInformation($"Result is {result}");
     });
     stopwatch.Stop();
-    Console.WriteLine($"[{orderRuleScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
+    Console.WriteLine($"[{script.ScriptType!.Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
 
-    if (baseline is not null && baseline is IOrderRuleScript baselineScript)
+    if (baseline.Script is not null && baseline.Script is IOrderRuleScript)
     {
         stopwatch.Restart();
         await Parallel.ForEachAsync(iterations, async (_, _) =>
         {
-            var result = await new OrderRuleScriptContainer(baselineScript)
+            var result = await new OrderRuleScriptContainer(baseline.ScriptType!)
                 .EvaluateRule(orderReader, scriptDataProvider, logger);
 
             logger.LogInformation($"Result is {result}");
         });
         stopwatch.Stop();
-        Console.WriteLine($"[{baselineScript.GetType().Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
+        Console.WriteLine($"[{baseline.ScriptType!.Name}] Executed {iterations.Count()} iterations in {stopwatch.Elapsed.TotalMilliseconds}ms (Avg: {stopwatch.Elapsed.TotalMilliseconds / iterations.Count()}ms)");
     }
 }
 

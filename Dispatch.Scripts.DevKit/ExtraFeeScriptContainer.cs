@@ -4,13 +4,13 @@ namespace Dispatch.Scripts.DevKit
 {
     internal class ExtraFeeScriptContainer : IExtraFeeScript
     {
-        private readonly IExtraFeeScript _script;
+        private readonly Type _scriptType;
 
-        public ExtraFeeScriptContainer(IExtraFeeScript script)
+        public ExtraFeeScriptContainer(Type scriptType)
         {
-            _script = script;
+            _scriptType = scriptType;
         }
 
-        public Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IScriptDataProvider data, ILogger logger) => _script.GetExtraFeePriceInfo(order, data, logger);
+        public Task<ExtraFeeScriptResult> GetExtraFeePriceInfo(OrderScriptInfo order, IScriptDataProvider data, ILogger logger) => ((IExtraFeeScript)Activator.CreateInstance(_scriptType)!).GetExtraFeePriceInfo(order, data, logger);
     }
 }
