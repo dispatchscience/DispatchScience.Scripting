@@ -7,5 +7,6 @@
         public int? ScriptRuleId { get; set; }
         public int? ExtraFeeScheduleId { get; set; }
         public string? ExtraFeeTypeId { get; set; }
+        public decimal? ExtraFeeQuantity { get; set; }
     }
 }
