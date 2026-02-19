@@ -7,6 +7,7 @@ namespace Dispatch.Scripts
 {
     public interface IScriptDataProvider
     {
+        [Obsolete("Use GetContext().OrderUpdate.Data instead.")]
         Task<IDictionary<string, string>> GetScriptData();
         Task<IList<string>> GetEventNames();
 
@@ -61,6 +62,12 @@ namespace Dispatch.Scripts
         /// <summary>
         /// Returns information about the execution of the script such as the script id, the extra fee, etc... Values could be null if not available for script type.
         /// </summary>
+        [Obsolete("Use GetContext() instead.")]
         Task<ScriptExecutionContext> GetExecutionContext();
+
+        /// <summary>
+        /// Returns information about the execution of the script such as the script id, the extra fee, etc... Values could be null if not available for script type.
+        /// </summary>
+        Task<IScriptExecutionContext> GetContext();
     }
 }
