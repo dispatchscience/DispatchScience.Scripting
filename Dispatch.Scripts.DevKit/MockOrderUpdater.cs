@@ -373,6 +373,12 @@ namespace Dispatch.Scripts.DevKit
             _logger.LogInformation($"[{OrderId}] {nameof(UpdateServiceLevel)}({serviceLevelTypeId}, {updateDeliveryCharge}, {updateScriptedExtraFees}) called");
         }
 
+        public async Task UpdateVehicleType(string vehicleTypeId, Action<PricingUpdateOptions>? configureOptions = null)
+        {
+            await Task.CompletedTask;
+            _logger.LogInformation($"[{OrderId}] {nameof(UpdateVehicleType)}('{vehicleTypeId}') called");
+        }
+
         public async Task UpdatePickupDuration(TimeSpan newDuration, bool preventRelatedSegmentUpdate = false)
         {
             await Task.CompletedTask;

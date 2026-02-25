@@ -343,6 +343,13 @@ namespace Dispatch.Scripts
         Task UpdateServiceLevel(string serviceLevelTypeId, bool updateDeliveryCharge = true, bool updateScriptedExtraFees = true);
 
         /// <summary>
+        /// Update the vehicle type on the order. Charges will automatically be recalculated.
+        /// </summary>
+        /// <param name="vehicleTypeId">The new vehicle type id.</param>
+        /// <param name="configureOptions">The action used to configure the options</param>
+        Task UpdateVehicleType(string vehicleTypeId, Action<PricingUpdateOptions>? configureOptions = null);
+
+        /// <summary>
         /// Recalculate different order charges.
         /// </summary>
         [Obsolete("Use RecalculateCharges(Action<PricingUpdateOptions>? configureOptions = null) instead")]
