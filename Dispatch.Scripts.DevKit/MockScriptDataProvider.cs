@@ -97,5 +97,10 @@ namespace Dispatch.Scripts.DevKit
 
         public Task<ScriptExecutionContext> GetExecutionContext()
             => Task.FromResult(_scriptDebugWrapper.GetScriptDataCall<ScriptExecutionContext>(nameof(GetExecutionContext)) ?? new ScriptExecutionContext());
+
+        public Task<IScriptExecutionContext> GetContext()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
