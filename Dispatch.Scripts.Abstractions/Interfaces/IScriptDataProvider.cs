@@ -60,6 +60,18 @@ namespace Dispatch.Scripts
         Task<T[]> GetSheet<T>(string? sheetName = null, Action<(T DataObject, IGrouping<int?, ScriptCell> RowData, (string Name, string RawName, int Number)[] AvailableColumns)>? additionalInitializer = null) where T : IScriptData, new();
 
         /// <summary>
+        /// Returns the single active order group that match the specified group key, if any.
+        /// </summary>
+        /// <param name="key">The exact group key to search for.</param>
+        Task<IOrderGroupReader?> FindActiveGroupByKey(string key);
+
+        /// <summary>
+        /// Returns the order group that match the id.
+        /// </summary>
+        /// <param name="id">The id of the group.</param>
+        Task<IOrderGroupReader?> FindGroupById(string id);
+
+        /// <summary>
         /// Returns information about the execution of the script such as the script id, the extra fee, etc... Values could be null if not available for script type.
         /// </summary>
         [Obsolete("Use GetContext() instead.")]

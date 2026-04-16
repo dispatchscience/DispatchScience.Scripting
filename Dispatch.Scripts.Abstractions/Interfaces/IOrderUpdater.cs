@@ -380,6 +380,14 @@ namespace Dispatch.Scripts
         /// </remarks>
         Task OverrideTaxSchedule(string? taxScheduleId);
 
+        /// <summary>
+        /// Add this order to an order group manually.
+        /// Manually added orders are protected from automatic removal by the process manager.
+        /// </summary>
+        /// <param name="groupId">The ID of the group to add the order to.</param>
+        Task AddToGroup(string groupId);
+
+        new IOrderGroupUpdater[] OrderGroups { get; }
         new IWorkflowUpdater? PickupWorkflow { get; }
         new IWorkflowUpdater? DeliveryWorkflow { get; }
         new IWorkflowUpdater? AddItemWorkflow { get; }

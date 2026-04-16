@@ -67,7 +67,7 @@ var logger = shouldLog
     ? loggerFactory.CreateLogger<Program>()
     : (ILogger)NullLogger.Instance;
 
-var forceRerunMapSheet = true;
+var forceRerunMapSheet = false;
 if (forceRerunMapSheet)
 {
     Console.WriteLine("Using 'forceRerunMapSheet', this will impact performance comparison since it doesn't use the 'cached' typed objects and reconstructs them using Reflection.");

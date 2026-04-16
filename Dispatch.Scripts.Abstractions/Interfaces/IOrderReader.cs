@@ -62,6 +62,8 @@ namespace Dispatch.Scripts
         OrderItemInfo[] OrderItems { get; }
         OrderExceptionCodeInfo[] ExceptionCodes { get; }
         Attachment[] Attachments { get; }
+        OrderZone[] Zones { get; }
+        IOrderGroupReader[] OrderGroups { get; }
         IWorkflowReader? PickupWorkflow { get; }
         IWorkflowReader? DeliveryWorkflow { get; }
         IWorkflowReader? AddItemWorkflow { get; }
@@ -72,8 +74,6 @@ namespace Dispatch.Scripts
         decimal? CollectOnPickup { get; }
         bool AllowPartialCollectOnDelivery { get; }
         bool AllowPartialCollectOnPickup { get; }
-
-        OrderZone[] Zones { get; }
 
         bool IsOnHold { get; }
         string? HoldExceptionCodeId { get; }

@@ -14,6 +14,7 @@ namespace Dispatch.Scripts.Abstractions
         public static string ScriptDataProvider = nameof(ScriptDataProvider);
         public static string OrderReader = nameof(OrderReader);
         public static string OrderScriptInfo = nameof(OrderScriptInfo);
+        public static string OrderGroupDetail = nameof(OrderGroupDetail);
         public static string OrderId = nameof(OrderId);
         public static string MultiSegmentOrderId = nameof(MultiSegmentOrderId);
         public static string SegmentOrderIds = nameof(SegmentOrderIds);
@@ -111,12 +112,45 @@ namespace Dispatch.Scripts.Abstractions
 
             try
             {
-                _debugData.TryAdd($"{OrderScriptInfo}", ToExpandoObject(value));
+                _debugData.TryAdd(OrderScriptInfo, ToExpandoObject(value));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred when trying to AddOrderScriptInfo");
             }
+        }
+
+        public void AddOrderGroupDetail<T>(string groupId, T value) where T : IOrderGroupDetailReader
+        {
+            if (_debugData is null)
+            {
+                throw new Exception("Cannot write data in this mode.");
+            }
+
+            try
+            {
+                _debugData.TryAdd($"{OrderGroupDetail}_{groupId}", ToExpandoObject(value));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred when trying to AddOrderGroupDetail of {groupId}");
+            }
+        }
+
+        public T? GetOrderGroupDetail<T>(string groupId)
+        {
+            if (_jsonData is null)
+            {
+                throw new Exception("Cannot read data in this mode.");
+            }
+
+            var data = _jsonData[$"{OrderGroupDetail}_{groupId}"];
+            if (data is null)
+            {
+                return default;
+            }
+
+            return JsonConvert.DeserializeObject<T>(data.ToJsonString());
         }
 
         public bool HasScriptData(string methodName, params object[] args)
