@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 
 using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
-    .SetMinimumLevel(LogLevel.Information)
+    .SetMinimumLevel(LogLevel.Debug)
     .AddConsole());
 
 var arguments = Environment.GetCommandLineArgs();
