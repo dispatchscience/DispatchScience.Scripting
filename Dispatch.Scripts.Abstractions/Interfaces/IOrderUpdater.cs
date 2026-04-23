@@ -259,14 +259,14 @@ namespace Dispatch.Scripts
         /// <summary>
         /// Update the pickup load duration of the order
         /// </summary>
-        /// <param name="newDuration">The new pickup load duration. Value must be between 0 and 120 minutes.</param>
+        /// <param name="newDuration">The new pickup load duration. Value must be between 0 and 480 minutes.</param>
         /// <param name="preventRelatedSegmentUpdate">In the case of a MultiSegment/Segment order, if you don't want your change to have an impact on other segments or the multisegment order, set this to true.</param>
         Task UpdatePickupDuration(TimeSpan newDuration, bool preventRelatedSegmentUpdate = false);
 
         /// <summary>
         /// Update the delivery unload duration of the order
         /// </summary>
-        /// <param name="newDuration">The new delivery unload duration</param>
+        /// <param name="newDuration">The new delivery unload duration. Value must be between 0 and 480 minutes.</param>
         /// <param name="preventRelatedSegmentUpdate">In the case of a MultiSegment/Segment order, if you don't want your change to have an impact on other segments or the multisegment order, set this to true.</param>
         Task UpdateDeliveryDuration(TimeSpan newDuration, bool preventRelatedSegmentUpdate = false);
 
