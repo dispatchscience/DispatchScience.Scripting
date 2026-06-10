@@ -263,6 +263,12 @@ namespace Dispatch.Scripts.Abstractions
             _logger.LogInformation($"[{OrderId}] {nameof(RecalculateWindows)}() called");
         }
 
+        public async Task RecalculateFuelSurcharge(DateTimeOffset? forDate = null)
+        {
+            await Task.CompletedTask;
+            _logger.LogInformation($"[{OrderId}] {nameof(RecalculateFuelSurcharge)}({forDate}) called");
+        }
+
         public async Task Release()
         {
             await Task.CompletedTask;

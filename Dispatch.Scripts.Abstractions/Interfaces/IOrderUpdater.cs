@@ -373,6 +373,15 @@ namespace Dispatch.Scripts
         Task RecalculateWindows();
 
         /// <summary>
+        /// Recalculate the fuel surcharge on the order's charges (delivery, reattempts and extra fees), then recalculate driver payouts if necessary.
+        /// </summary>
+        /// <param name="forDate">
+        /// The date used to look up the fuel price in the fuel surcharge schedule.
+        /// When null, the order's price calculation date is used.
+        /// </param>
+        Task RecalculateFuelSurcharge(DateTimeOffset? forDate = null);
+
+        /// <summary>
         /// Override the tax schedule that will be used for tax calculation when generating the invoice.
         /// </summary>
         /// <remarks>
