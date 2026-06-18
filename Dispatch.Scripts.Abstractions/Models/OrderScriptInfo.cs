@@ -48,6 +48,8 @@ namespace Dispatch.Scripts
         
         public IList<OrderItemInfo> OrderItemInfos { get; set; } = new List<OrderItemInfo>();
 
+        public IList<OrderExceptionCodeInfo> ExceptionCodes { get; set; } = new List<OrderExceptionCodeInfo>();
+
         public OrderEventDates EventDates { get; init; } = new();
     }
 
