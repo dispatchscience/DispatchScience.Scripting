@@ -9,6 +9,12 @@ namespace Dispatch.Scripts
     {
         string OrderId { get; }
         string AccountId { get; }
+
+        /// <summary>
+        /// The account that placed a Bill To order. Null on a standard order.
+        /// </summary>
+        string? OrderingAccountId { get; }
+
         string ServiceLevelTypeId { get; }
         string ReferenceNumber1 { get; }
         string ReferenceNumber2 { get; }

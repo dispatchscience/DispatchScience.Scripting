@@ -43,6 +43,9 @@ namespace Dispatch.Scripts.Abstractions
         public Task<AccountScriptInfo?> GetAccountInfo()
             => Task.FromResult(_scriptDebugWrapper.GetScriptDataCall<AccountScriptInfo>(nameof(GetAccountInfo)));
 
+        public Task<AccountScriptInfo?> GetOrderingAccountInfo()
+            => Task.FromResult(_scriptDebugWrapper.GetScriptDataCall<AccountScriptInfo>(nameof(GetOrderingAccountInfo)));
+
         public Task<IList<string>> GetAvailableExtraFeeTypes()
             => Task.FromResult(_scriptDebugWrapper.GetScriptDataCall<IList<string>>(nameof(GetAvailableExtraFeeTypes)) ?? []);
 
@@ -121,6 +124,7 @@ namespace Dispatch.Scripts.Abstractions
         private class MockScriptExecutionContext : IScriptExecutionContext
         {
             public string AccountId => "the account id";
+            public string? OrderingAccountId => "the ordering account id";
             public int ScriptId => 1;
 
             public IOrderUpdateScriptExecutionContext? OrderUpdate => null;

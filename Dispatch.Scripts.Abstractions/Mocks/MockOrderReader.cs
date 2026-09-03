@@ -10,6 +10,7 @@ namespace Dispatch.Scripts.Abstractions
     {
         public string OrderId { get; set; } = string.Empty;
         public string AccountId { get; set; } = string.Empty;
+        public string? OrderingAccountId { get; set; }
         public string ServiceLevelTypeId { get; set; } = string.Empty;
         public string ReferenceNumber1 { get; set; } = string.Empty;
         public string ReferenceNumber2 { get; set; } = string.Empty;

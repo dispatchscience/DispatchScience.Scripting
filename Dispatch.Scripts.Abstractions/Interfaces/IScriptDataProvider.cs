@@ -12,10 +12,14 @@ namespace Dispatch.Scripts
         Task<IList<string>> GetEventNames();
 
         Task<IDictionary<string, string>> GetAccountFields();
+
         Task<AccountScriptInfo?> GetAccountInfo();
+        Task<AccountScriptInfo?> GetOrderingAccountInfo();
+
         Task<AccountDiscountInfo?> FindAccountExtraFeeDiscount(string serviceLevelTypeId, string extraFeeTypeId);
         Task<AccountDiscountInfo?> FindAccountPriceListDiscount(string serviceLevelTypeId);
         Task<ServiceLevelInfo?> FindServiceLevel(int? serviceLevelScheduleId, string? serviceLevelTypeId);
+
         Task<MasterAccountScriptInfo?> GetMasterAccountInfo();
         Task<IList<string>> GetZones(ScriptZoneType zoneType, LatLng position);
         Task<IList<string>> GetAvailableExtraFeeTypes();
@@ -29,6 +33,7 @@ namespace Dispatch.Scripts
         /// Returns the IRouteScriptInfo for a given routeId
         /// </summary>
         Task<IRouteScriptInfo?> GetRouteInfo(string routeId);
+
         /// <summary>
         /// Returns the IRouteScriptInfo for the next route. You can pass a IRouteScriptInfo to get the route after the one provided.
         /// </summary>

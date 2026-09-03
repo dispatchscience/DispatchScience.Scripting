@@ -36,6 +36,7 @@ namespace Dispatch.Scripts.Abstractions
 
         public string OrderId => _orderReader.OrderId;
         public string AccountId => _orderReader.AccountId;
+        public string? OrderingAccountId => _orderReader.OrderingAccountId;
         public string ServiceLevelTypeId => _orderReader.ServiceLevelTypeId;
         public string ReferenceNumber1 => _orderReader.ReferenceNumber1;
         public string ReferenceNumber2 => _orderReader.ReferenceNumber2;

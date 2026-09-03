@@ -6,6 +6,12 @@ namespace Dispatch.Scripts
     public class ScriptExecutionContext
     {
         public string AccountId { get; set; } = default!;
+
+        /// <summary>
+        /// The account that placed a Bill To order. Null on a standard order. <see cref="AccountId"/> keeps meaning the billed account.
+        /// </summary>
+        public string? OrderingAccountId { get; set; }
+
         public int ScriptId { get; set; }
         public int? ScriptRuleId { get; set; }
         public int? ExtraFeeScheduleId { get; set; }
@@ -16,6 +22,12 @@ namespace Dispatch.Scripts
     public interface IScriptExecutionContext
     {
         string AccountId { get; }
+
+        /// <summary>
+        /// The account that placed a Bill To order. Null on a standard order. <see cref="AccountId"/> keeps meaning the billed account.
+        /// </summary>
+        string? OrderingAccountId { get; }
+
         int ScriptId { get; }
 
         IOrderUpdateScriptExecutionContext? OrderUpdate { get; }
