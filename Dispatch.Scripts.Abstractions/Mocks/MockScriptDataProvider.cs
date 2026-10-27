@@ -107,9 +107,12 @@ namespace Dispatch.Scripts.Abstractions
         public Task<IScriptExecutionContext> GetContext()
             => Task.FromResult(_scriptDebugWrapper.GetScriptDataCall<IScriptExecutionContext>(nameof(GetContext)) ?? new MockScriptExecutionContext());
 
-        public async Task<IOrderGroupReader?> FindActiveGroupByKey(string key)
+        public Task<IList<OrderGroupTypeInfo>> GetOrderGroupTypes()
+            => Task.FromResult(_scriptDebugWrapper.GetScriptDataCall<IList<OrderGroupTypeInfo>>(nameof(GetOrderGroupTypes)) ?? []);
+
+        public async Task<IOrderGroupReader?> FindActiveGroupByTypeAndKey(int groupTypeId, string key)
         {
-            var orderGroupReader = _scriptDebugWrapper.GetScriptDataCall<MockOrderGroupReader>(nameof(FindActiveGroupByKey), key);
+            var orderGroupReader = _scriptDebugWrapper.GetScriptDataCall<MockOrderGroupReader>(nameof(FindActiveGroupByTypeAndKey), groupTypeId, key);
             orderGroupReader?.SetDebugWrapper(_scriptDebugWrapper);
             return orderGroupReader;
         }

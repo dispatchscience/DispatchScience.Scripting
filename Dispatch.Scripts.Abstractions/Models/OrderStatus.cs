@@ -2,6 +2,7 @@
 {
     public enum OrderStatus
     {
+        Draft = -1,
         Received = 0,
         Assigned = 1,
         PickedUp = 2,

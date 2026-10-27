@@ -65,10 +65,16 @@ namespace Dispatch.Scripts
         Task<T[]> GetSheet<T>(string? sheetName = null, Action<(T DataObject, IGrouping<int?, ScriptCell> RowData, (string Name, string RawName, int Number)[] AvailableColumns)>? additionalInitializer = null) where T : IScriptData, new();
 
         /// <summary>
-        /// Returns the single active order group that match the specified group key, if any.
+        /// Returns the order group types configured for the tenant.
         /// </summary>
+        Task<IList<OrderGroupTypeInfo>> GetOrderGroupTypes();
+
+        /// <summary>
+        /// Returns the single active order group of the specified group type that matches the specified group key, if any.
+        /// </summary>
+        /// <param name="groupTypeId">The id of the group type, see <see cref="GetOrderGroupTypes"/>.</param>
         /// <param name="key">The exact group key to search for.</param>
-        Task<IOrderGroupReader?> FindActiveGroupByKey(string key);
+        Task<IOrderGroupReader?> FindActiveGroupByTypeAndKey(int groupTypeId, string key);
 
         /// <summary>
         /// Returns the order group that match the id.
